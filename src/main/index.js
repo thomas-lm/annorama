@@ -1,4 +1,8 @@
-import { app, BrowserWindow } from 'electron'
+'use strict'
+
+import { app, BrowserWindow, ipcMain } from 'electron'
+import '../renderer/store'
+import path from 'path'
 
 /**
  * Set `__static` path to static files in production
@@ -8,7 +12,8 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
-let mainWindow
+let mainWindow, parserWindow
+
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
@@ -18,15 +23,43 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
-    useContentSize: true,
-    width: 1000
+    width: 400,
+    height: 600,
+    useContentSize: true
   })
+  mainWindow.setPosition(0, 0)
 
   mainWindow.loadURL(winURL)
 
   mainWindow.on('closed', () => {
     mainWindow = null
+    app.exit()
+  })
+
+  createParsingWindow()
+}
+
+/**
+ * Create new window for reading the sourceCode of
+ * remote pages.
+ */
+function createParsingWindow () {
+  // Create the browser window.
+  parserWindow = new BrowserWindow({
+    width: 400,
+    height: 400,
+    show: false,
+    autoHideMenuBar: true,
+    webPreferences: {
+      preload: path.resolve(__static, 'preload.js')
+    }
+  })
+
+  if (!process.env.IS_TEST) parserWindow.webContents.openDevTools()
+
+  parserWindow.on('close', function (e) {
+    e.preventDefault()
+    parserWindow.hide()
   })
 }
 
@@ -42,6 +75,47 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+var parserEventList = []
+var currentProcessing
+
+/**
+ * Add in request queue
+ */
+ipcMain.on('parse-url', (e, arg) => {
+  parserEventList.unshift({url: arg, ipcEvent: e})
+})
+
+/**
+ * Request queue processor
+ */
+var requestQueueProcessor = function () {
+  if (currentProcessing === undefined && parserEventList.length > 0) {
+    currentProcessing = parserEventList.pop()
+    console.log('requesting url ', currentProcessing.url)
+    parserWindow.show()
+    parserWindow.loadURL(currentProcessing.url)
+  }
+  setTimeout(requestQueueProcessor, 1000)
+}
+requestQueueProcessor()
+
+/**
+ * Process response from browser window
+ */
+ipcMain.on('render-url', (e, source) => {
+  if (currentProcessing !== undefined) {
+    e.sender.send('render-url-reply')
+    currentProcessing.ipcEvent.sender.send('parse-url-reply', source)
+    parserWindow.hide()
+    currentProcessing = undefined
+  }
+})
+
+ipcMain.on('count-processing', (e) => {
+  console.log('count...')
+  e.returnValue = parserEventList.length + 1
 })
 
 /**
