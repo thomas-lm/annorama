@@ -1,24 +1,40 @@
 <template>
   <div id="app">
-    <div class="left-panel">
-      <div class="lp-header">
-        <h1>Annorama</h1>
-        <a href="/" class="bt-new-project">Nouvelle recherche</a>
+    <header>
+      <h1>Annorama</h1>
+    </header>
+    <main>
+      <aside class="sidebar">
+        <h2>Your projects</h2>
+        <router-link class="link" to="/">  new project</router-link>
+        <router-link
+            v-for="project in projects"
+            v-bind:key="project.id"
+            active-class="activeRoute"
+            class="link"
+            :to="{ name: 'project', params: { id: project.id } }">
+          {{project.name}} ({{project.nbItems}})
+        </router-link>
+      </aside>
+      <div class="content">
+        <router-view></router-view>
       </div>
-      <ul>
-        <li><a href="ss">Projet 1</a></li>
-        <li><a href="qsd">Projet 2</a></li>
-      </ul>
-    </div>
-    <div class="main-panel">
-      <router-view></router-view>
-    </div>
+    </main>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'annorama-simu'
+    name: 'annorama',
+    data () {
+      return {
+        projects: [
+          {id: 1, name: 'maison Nantes', nbItems: 34, category: 'housing'},
+          {id: 2, name: 'boulot java', nbItems: 10, category: 'job'},
+          {id: 3, name: 'baignoire bébé', nbItems: 15, category: 'furniture'}
+        ]
+      }
+    }
   }
 </script>
 
@@ -29,22 +45,31 @@
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
-.left-panel {
+
+.sidebar {
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
   width: 170px;
-  color: #6d4c92;
-  background-color: #ece9ec;
+  color: #8c8364;
+  background-color: #ddd6c1;
+  padding: 0 .5em
 }
 
-.left-panel .lp-header {
-  position: relative;
-  height: 70px;
-  padding: 0 .5em;
-  border-bottom: 1px solid #cfcbd4;
+.link.activeRoute {
+  color: #584c27;
+  background-color: #c7bc99;
 }
+
+.link {
+  position: relative;
+  display: block;
+  color: #8c8364;
+  text-decoration: none;
+  padding: .5em 0;
+}
+
 
 .bt-new-project {
     text-decoration: none;
@@ -56,12 +81,12 @@
     cursor: pointer;
 }
 
-.main-panel {
+.content {
   position: absolute;
   left: 170px;
   top: 0;
   bottom: 0;
   right: 0;
-  background-color:#f6f6f6;
+  background-color:#fdf6e3;
 }
 </style>
