@@ -5,13 +5,14 @@
     </header>
     <main>
       <aside class="sidebar">
-        <h2>Your projects</h2>
-        <router-link class="link" to="/">  new project</router-link>
+        <h2 class="sidebar_title">Your projects</h2>
+        <router-link class="sidebar_link" to="/"> + new project</router-link>
+        <hr />
         <router-link
             v-for="project in projects"
             v-bind:key="project.id"
             active-class="activeRoute"
-            class="link"
+            class="sidebar_link"
             :to="{ name: 'project', params: { id: project.id } }">
           {{project.name}} ({{project.nbItems}})
         </router-link>
@@ -30,7 +31,7 @@
       return {
         projects: [
           {id: 1, name: 'maison Nantes', nbItems: 34, category: 'housing'},
-          {id: 2, name: 'boulot java', nbItems: 10, category: 'job'},
+          {id: 2, name: 'boulot javsdf sdf sdf a', nbItems: 10, category: 'job'},
           {id: 3, name: 'baignoire bébé', nbItems: 15, category: 'furniture'}
         ]
       }
@@ -43,7 +44,6 @@
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
 }
 
 .sidebar {
@@ -52,33 +52,40 @@
   top: 0;
   bottom: 0;
   width: 170px;
-  color: #8c8364;
-  background-color: #ddd6c1;
-  padding: 0 .5em
+  background-color: #d2d7d9;
 }
 
-.link.activeRoute {
-  color: #584c27;
-  background-color: #c7bc99;
+.sidebar hr {
+  border-style: dotted;
+  margin: 0;
 }
 
-.link {
+.sidebar_title {
+  padding: 0 .5em;
+  font-size: 1.4em;
+  margin: .5em 0;
+  color: #878f94;
+}
+
+.sidebar_link.activeRoute {
+  color: #d2d7d9;
+  background-color: #869eac;
+}
+
+.sidebar_link {
   position: relative;
   display: block;
-  color: #8c8364;
+  color: #878f94;
   text-decoration: none;
-  padding: .5em 0;
+  padding: .5em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-
-.bt-new-project {
-    text-decoration: none;
-    font-size: .8em;
-    text-align: center;
-    border: 1px solid #4444FF;
-    padding: .5em;
-    border-radius: 1em;
-    cursor: pointer;
+.sidebar_link:hover {
+  color: #d2d7d9;
+  background-color: #9BA3A7;
 }
 
 .content {
@@ -87,6 +94,7 @@
   top: 0;
   bottom: 0;
   right: 0;
-  background-color:#fdf6e3;
+  background-color: #FFFAF6;
+  color: #91a19a;
 }
 </style>

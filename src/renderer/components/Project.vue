@@ -1,6 +1,6 @@
 <template>
   <div class="main" v-if="project">
-    project {{project.id}}
+    <h1>project {{project.id}}</h1>
   </div>
 </template>
 <script>
@@ -29,3 +29,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+h1 {
+  font-size: 2em;
+  padding: 0 .5em;
+}
+</style>
