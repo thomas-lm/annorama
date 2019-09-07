@@ -2,6 +2,8 @@
 
 > Ce programme permet de vous assister dans vos recherches pour des petites annonces. Il permet de regrouper en un seul endroit l'ensemble de vos recherches (multi-sources) et propose des outils vous permettant de trier l'ensemble des annonces.
 
+> Ce programme est en cours de création, les fonctionnalités de bases ne sont toujours pas toutes présentes.
+
 #### Build Setup
 use with :
 - node v12.9.1
