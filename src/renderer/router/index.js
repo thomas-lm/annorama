@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import NewProject from '@/components/NewProject.vue'
 import Search from '@/components/Search.vue'
 import Project from '@/components/Project.vue'
 
@@ -10,6 +11,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'newProject',
+      component: NewProject
+    },
+    {
+      path: '/search',
       name: 'search',
       component: Search
     },

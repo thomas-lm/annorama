@@ -21,7 +21,7 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "annorama-simu",
+    "productName": "Annorama",
     "appId": "fr.annorama.desktop",
     "directories": {
       "output": "build"
@@ -58,6 +58,7 @@
     "cheerio": "^1.0.0-rc.3",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
+    "vue-i18n": "^8.14.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
     "vuex-electron": "^1.0.0"
