@@ -1,28 +1,32 @@
-# annorama-simu
+# annorama
 
-> An electron-vue project
+> Ce programme permet de vous assister dans vos recherches pour des petites annonces. Il permet de regrouper en un seul endroit l'ensemble de vos recherches (multi-sources) et propose des outils vous permettant de trier l'ensemble des annonces.
 
 #### Build Setup
+use with :
+- node v12.9.1
+- yarn 1.17.3
+- vue 3.11.0
+
 
 ``` bash
 # install dependencies
-npm install
+yarn
 
 # serve with hot reload at localhost:9080
-npm run dev
+yarn dev
 
 # build electron application for production
-npm run build
+yarn build
 
 # run unit tests
-npm test
+yarn test
 
 
 # lint all JS/Vue component files in `src/`
-npm run lint
+yarn run lint
 
 ```
 
 ---
 
-This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[8fae476](https://github.com/SimulatedGREG/electron-vue/tree/8fae4763e9d225d3691b627e83b9e09b56f6c935) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
