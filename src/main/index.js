@@ -3,6 +3,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import '../renderer/store'
 import path from 'path'
+import { getAppData, saveAppData } from '../storage.js'
 
 /**
  * Set `__static` path to static files in production
@@ -23,17 +24,27 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    width: 700,
-    height: 600,
-    useContentSize: true
+    width: getAppData('windowWidth'),
+    height: getAppData('windowHeight'),
+    useContentSize: true,
+    x: getAppData('windowX'),
+    y: getAppData('windowY')
   })
-  mainWindow.setPosition(0, 0)
+
+  if (getAppData('windowMaximize') === true) {
+    mainWindow.maximize()
+  }
 
   mainWindow.loadURL(winURL)
 
   mainWindow.on('closed', () => {
     mainWindow = null
     app.exit()
+  })
+
+  mainWindow.on('move', (e) => {
+    saveAppData('windowX', mainWindow.getPosition()[0])
+    saveAppData('windowY', mainWindow.getPosition()[1])
   })
 
   createParsingWindow()
@@ -46,7 +57,7 @@ function createWindow () {
 function createParsingWindow () {
   // Create the browser window.
   parserWindow = new BrowserWindow({
-    width: 400,
+    width: 600,
     height: 400,
     show: false,
     autoHideMenuBar: true,
