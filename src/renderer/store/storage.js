@@ -1,5 +1,5 @@
 import { app } from 'electron'
-import { APP_SETTINGS_PATH, APP_SETTINGS_FILE, DEFAULT_LANGAGE } from './constantes.js'
+import { APP_SETTINGS_PATH, APP_SETTINGS_FILE, DEFAULT_LANGAGE } from '../../constantes.js'
 import yaml from 'js-yaml'
 import fs from 'fs'
 
