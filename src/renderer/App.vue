@@ -34,23 +34,35 @@
 </template>
 
 <script>
+  import Storage from '../storage.js'
+  import { DEFAULT_LANGAGE, APP_SETTINGS_PATH, APP_RENTERER_SETTINGS_FILE } from '../constantes.js'
+  import { remote } from 'electron'
+
   export default {
     name: 'annorama',
     data () {
+      if (this.$storage === undefined) {
+        this.$storage = new Storage(
+          remote.app.getPath('userData') + '/' + APP_SETTINGS_PATH,
+          APP_RENTERER_SETTINGS_FILE,
+          {
+            defaultLanguage: DEFAULT_LANGAGE,
+            projects: []
+          }
+        )
+      }
       return {
-        projects: [
-          {id: 1, name: 'maison Nantes', nbItems: 34, category: 'housing'},
-          {id: 2, name: 'boulot javsdf sdf sdf a', nbItems: 10, category: 'job'},
-          {id: 3, name: 'baignoire bébé', nbItems: 15, category: 'shopping'},
-          {id: 4, name: 'boulot dev', nbItems: 10, category: 'job'},
-          {id: 5, name: 'mouchoirs', nbItems: 15, category: 'shopping'}
-        ]
+        projects: this.$storage.get('projects')
       }
     },
     methods: {
       lang (code) {
         this.$i18n.locale = code
+        this.$storage.set('defaultLanguage', code)
       }
+    },
+    created () {
+      this.$i18n.locale = this.$storage.get('defaultLanguage')
     }
   }
 </script>
