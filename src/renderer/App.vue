@@ -21,7 +21,7 @@
       Sidebar
     },
     created () {
-      this.$i18n.locale = this.$store.Main.defaultLanguage
+      this.$i18n.locale = this.$store.Main.language
     }
   }
 </script>

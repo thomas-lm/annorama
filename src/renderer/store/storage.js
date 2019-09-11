@@ -1,12 +1,17 @@
 import yaml from 'js-yaml'
 import fs from 'fs'
+import path from 'path'
 
 export default class Storage {
-  constructor (path, filename, defaultData) {
-    this.path = path
-    this.filename = filename
-    this.filePath = path + '/' + filename
-    this.currentData = defaultData
+  constructor (basedir, filename) {
+    this.filePath = path.join(path, filename)
+    this.currentData = {}
+
+    // Create directory
+    if (!fs.existsSync(basedir)) {
+      console.log('create directory ', basedir)
+      fs.mkdirSync(basedir)
+    }
 
     if (fs.existsSync(this.filePath) === false) {
       console.log('settings file not exist : ', this.filePath)
@@ -27,12 +32,6 @@ export default class Storage {
 
   saveData () {
     let yamlData = yaml.safeDump(this.currentData)
-
-    // Create directory
-    if (!fs.existsSync(this.path)) {
-      console.log('create directory ', this.path)
-      fs.mkdirSync(this.path)
-    }
 
     // save file
     fs.writeFileSync(this.filePath, yamlData, 'utf-8')

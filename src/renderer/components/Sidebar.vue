@@ -31,7 +31,7 @@
     name: 'sidebar',
     computed: {
       ...mapState({
-        defaultLanguage: state => state.Main.defaultLanguage,
+        defaultLanguage: state => state.Main.language,
         projects: state => state.Main.projects
       })
     },

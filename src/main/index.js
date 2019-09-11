@@ -2,9 +2,8 @@
 
 import { app, BrowserWindow, ipcMain } from 'electron'
 import { APP_SETTINGS_PATH, APP_MAIN_SETTINGS_FILE } from '../constantes.js'
-import Storage from '../storage.js'
 
-import '../renderer/store'
+import store from '../renderer/store'
 import path from 'path'
 /**
  * Set `__static` path to static files in production
@@ -16,44 +15,23 @@ if (process.env.NODE_ENV !== 'development') {
 
 let mainWindow, parserWindow
 
-let storage = new Storage(
-  app.getPath('userData') + '/' + APP_SETTINGS_PATH,
-  APP_MAIN_SETTINGS_FILE,
-  {
-    windowX: 0,
-    windowY: 0,
-    windowWidth: 700,
-    windowHeight: 600,
-    windowMaximize: false
-  })
-
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
-
-  /*
-function getAppData (string) {
-  console.log('getData ', string)
-}
-
-function saveAppData (string, string1) {
-  console.log('saveData ', string, string1)
-}
-*/
 
 function createWindow () {
   /**
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    width: storage.get('windowWidth'),
-    height: storage.get('windowHeight'),
+    width: store.Window['windowWidth'],
+    height: store.Window['windowHeight'],
     useContentSize: true,
-    x: storage.get('windowX'),
-    y: storage.get('windowY')
+    x: store.Window['windowX'],
+    y: store.Window['windowY']
   })
 
-  if (storage.get('windowMaximize') === true) {
+  if (store.Window['windowMaximize'] === true) {
     mainWindow.maximize()
   }
 
@@ -65,13 +43,11 @@ function createWindow () {
   })
 
   mainWindow.on('move', (e) => {
-    storage.set('windowX', mainWindow.getPosition()[0])
-    storage.set('windowY', mainWindow.getPosition()[1])
+    store.Window.dispatch('UP_WIN_POS', mainWindow.getPosition()[0], mainWindow.getPosition()[1])
   })
 
   mainWindow.on('resize', (e) => {
-    storage.set('windowWidth', mainWindow.getBounds().width)
-    storage.set('windowHeight', mainWindow.getBounds().height)
+    store.Window.dispatch('UP_WIN_SIZE', mainWindow.getBounds().width, mainWindow.getBounds().height)
   })
 
   createParsingWindow()
