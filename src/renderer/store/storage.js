@@ -4,7 +4,7 @@ import path from 'path'
 
 export default class Storage {
   constructor (basedir, filename) {
-    this.filePath = path.join(path, filename)
+    this.filePath = path.join(basedir, filename)
     this.currentData = {}
 
     // Create directory

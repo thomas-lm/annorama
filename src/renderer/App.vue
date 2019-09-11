@@ -14,6 +14,7 @@
 
 <script>
   import Sidebar from '@/components/Sidebar.vue'
+  import './store'
 
   export default {
     name: 'annorama',

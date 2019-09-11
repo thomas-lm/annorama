@@ -1,10 +1,6 @@
-'use strict'
-
 import { app, BrowserWindow, ipcMain } from 'electron'
-import { APP_SETTINGS_PATH, APP_MAIN_SETTINGS_FILE } from '../constantes.js'
-
-import store from '../renderer/store'
 import path from 'path'
+
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -24,30 +20,16 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    width: store.Window['windowWidth'],
-    height: store.Window['windowHeight'],
-    useContentSize: true,
-    x: store.Window['windowX'],
-    y: store.Window['windowY']
+    width: 600,
+    height: 400,
+    useContentSize: true
   })
-
-  if (store.Window['windowMaximize'] === true) {
-    mainWindow.maximize()
-  }
 
   mainWindow.loadURL(winURL)
 
   mainWindow.on('closed', () => {
     mainWindow = null
     app.exit()
-  })
-
-  mainWindow.on('move', (e) => {
-    store.Window.dispatch('UP_WIN_POS', mainWindow.getPosition()[0], mainWindow.getPosition()[1])
-  })
-
-  mainWindow.on('resize', (e) => {
-    store.Window.dispatch('UP_WIN_SIZE', mainWindow.getBounds().width, mainWindow.getBounds().height)
   })
 
   createParsingWindow()

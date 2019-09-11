@@ -2,10 +2,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import VuexPersistence from 'vuex-persist'
 
-import { createPersistedState, createSharedMutations } from 'vuex-electron'
 import modules from './modules'
 
 import { APP_SETTINGS_FILE } from '../../constantes.js'
+import Storage from './storage.js'
 import { app, remote } from 'electron'
 
 let userStorage
@@ -33,9 +33,7 @@ const vuePersist = new VuexPersistence({
 export default new Vuex.Store({
   modules,
   plugins: [
-    createPersistedState(),
-    createSharedMutations(),
-    vuePersist
+    vuePersist.plugin
   ],
   strict: process.env.NODE_ENV !== 'production'
 })
