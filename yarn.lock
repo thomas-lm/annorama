@@ -10813,7 +10813,7 @@ vue-html-loader@^1.2.4:
 
 vue-i18n@^8.14.0:
   version "8.14.0"
-  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-8.14.0.tgz#613cbbc21d71dc608cd085f8a94ea3a40badcd33"
+  resolved "http://nexus.nantes.kosmos.fr/nexus/repository/public.npm/vue-i18n/-/vue-i18n-8.14.0.tgz#613cbbc21d71dc608cd085f8a94ea3a40badcd33"
   integrity sha512-utI1Rvc8i+fmmUkkKRmHaf4QQ87s7rGVL5ZZLsKvvRzmgaIr1l+GfGxxxRmsZxHpPlgeB8OxoUZ4noqZgDL6xg==
 
 vue-loader@^15.2.4:
