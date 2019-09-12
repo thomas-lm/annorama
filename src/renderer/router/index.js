@@ -20,7 +20,7 @@ export default new Router({
       component: Search
     },
     {
-      path: '/project/:id',
+      path: '/project/:uid',
       name: 'project',
       component: Project,
       props: true

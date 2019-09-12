@@ -1,30 +1,28 @@
 <template>
   <div class="main" v-if="project">
-    <h1>project {{project.id}}</h1>
+    <h1>project {{project.uid}}</h1>
   </div>
 </template>
 <script>
 export default {
   name: 'project',
-  props: ['id'],
+  props: ['uid'],
   data () {
     return {
       project: null
     }
   },
   methods: {
-    getProject (id) {
-      this.project = {
-        id: id
-      }
+    getProject (uid) {
+      this.project = this.$store.state.Main.projects[uid]
     }
   },
   created () {
-    this.getProject(this.id)
+    this.getProject(this.uid)
   },
   watch: {
     '$route' () {
-      this.getProject(this.id)
+      this.getProject(this.uid)
     }
   }
 }

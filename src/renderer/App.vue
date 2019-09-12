@@ -13,16 +13,25 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   import Sidebar from '@/components/Sidebar.vue'
-  import './store'
 
   export default {
     name: 'annorama',
     components: {
       Sidebar
     },
-    created () {
-      this.$i18n.locale = this.$store.Main.language
+    computed: {
+      ...mapState({
+        currentLanguage: state => state.Main.language
+      })
+    },
+    mounted: function () {
+      this.$nextTick(function () {
+        console.log('created window in ', this.currentLanguage)
+        this.$i18n.locale = this.currentLanguage
+        console.log(this.$i18n)
+      })
     }
   }
 </script>

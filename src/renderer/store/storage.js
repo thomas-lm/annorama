@@ -18,7 +18,7 @@ export default class Storage {
       this.saveData()
     } else {
       try {
-        console.log('loading settings')
+        console.log('loading settings in ', this.filePath)
         this.currentData = { ...this.currentData, ...this.loadData() }
       } catch (e) {
         console.log('error loading data :', e)

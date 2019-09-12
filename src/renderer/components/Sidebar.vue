@@ -12,31 +12,48 @@
             v-bind:key="project.id"
             active-class="activeRoute"
             class="sidebar_link"
-            :to="{ name: 'project', params: { id: project.id } }"
+            :to="{ name: 'project', params: { uid: project.uid } }"
             :title="project.name">
         <img :src="'/static/ico_cat_' + project.category + '.svg'" class="sidebar_icon" /> {{project.name}} ({{project.nbItems}})
         </router-link>
     </div>
     <div class="sidebar_bottom">
         <router-link class="sidebar_link" to="/search">test Search</router-link>
-        <button @click="lang('fr')">fr<span v-if="defaultLanguage=='fr'">*</span></button><button @click="lang('en')">en<span v-if="defaultLanguage=='en'">*</span></button>
+        {{$t('sidebar_language')}}
+        <select v-model="currentLanguage">
+          <option v-for="language in languages" :value="language" :key="language">
+            {{ language }}
+          </option>
+        </select>
     </div>
   </aside>
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { POSSIBLE_LANGUAGES } from '../../constantes.js'
 
   export default {
     name: 'sidebar',
+    data: function () {
+      return {
+        languages: POSSIBLE_LANGUAGES
+      }
+    },
     computed: {
-      ...mapState({
-        defaultLanguage: state => state.Main.language,
-        projects: state => state.Main.projects
-      })
+      currentLanguage: {
+        get () { return this.$store.state.Main.language },
+        set (value) {
+          this.$i18n.locale = value
+          this.$store.dispatch('CHANGE_LANGUAGE', value)
+        }
+      },
+      projects: {
+        get () { return this.$store.state.Main.projects }
+      }
     },
     methods: {
       lang (code) {
+        this.$i18n.locale = code
         this.$store.dispatch('CHANGE_LANGUAGE', code)
       }
     }

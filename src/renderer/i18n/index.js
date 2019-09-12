@@ -1,17 +1,18 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import { DEFAULT_LANGAGE } from '../../constantes.js'
+import { DEFAULT_LANGUAGE } from '../../constantes.js'
 
 Vue.use(VueI18n)
 
 export const i18n = new VueI18n({
-  local: DEFAULT_LANGAGE,
-  fallbackLocale: DEFAULT_LANGAGE,
+  local: DEFAULT_LANGUAGE,
+  fallbackLocale: DEFAULT_LANGUAGE,
   messages: {
     en: {
       app_title: 'Annorama',
       sidebar_title: 'Projects',
       sidebar_bt_new_project: 'start new project',
+      sidebar_language: 'language',
       new_project_title: 'New project',
       new_project_inputName: 'project name',
       new_project_selectCategory: 'Choose a category',
@@ -25,6 +26,7 @@ export const i18n = new VueI18n({
       app_title: 'Annorama',
       sidebar_title: 'Projets',
       sidebar_bt_new_project: 'démarrer un projet',
+      sidebar_language: 'langue',
       new_project_title: 'Nouveau projet',
       new_project_inputName: 'Nom du projet',
       new_project_selectCategory: 'choisir une catégorie',

@@ -29,7 +29,21 @@ export default {
   },
   methods: {
     creer () {
-      alert('todo')
+      // get the next id
+      let maxUid = 0
+      this.$store.state.Main.projects.forEach(p => {
+        if (p.uid > maxUid) maxUid = p.uid
+      })
+
+      let pUid = maxUid + 1
+      this.$store.dispatch('ADD_PROJECT', {
+        uid: pUid,
+        name: this.projectName,
+        projectCategory: this.projectCategory,
+        url: [this.projectUrl1]
+      })
+
+      this.$router.push({ name: 'project', params: { id: pUid } })
     }
   }
 }

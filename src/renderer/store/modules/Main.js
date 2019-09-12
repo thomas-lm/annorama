@@ -2,7 +2,7 @@ import { DEFAULT_LANGUAGE } from '../../../constantes.js'
 
 const state = {
   language: DEFAULT_LANGUAGE,
-  projects: []
+  projects: {}
 }
 
 const actions = {
@@ -16,12 +16,10 @@ const actions = {
 
 const mutations = {
   CHANGE_LANGUAGE (state, code) {
-    state.defaultLanguage = code
-    this.$i18n.locale = code
+    state.language = code
   },
   ADD_PROJECT (state, project) {
-    state.projects.push(project)
+    state.projects[project.uid] = project
   }
 }
-
 export default { state, mutations, actions }
