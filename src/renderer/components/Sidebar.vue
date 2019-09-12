@@ -1,9 +1,8 @@
 <template>
   <aside class="sidebar">
     <h2 class="sidebar_title">{{$t('sidebar_title')}}</h2>
-    <router-link class="sidebar_link" to="/"
-            active-class="activeRoute">
-        <img src="/static/ico_new.svg" class="sidebar_icon" />
+    <router-link class="sidebar_link" :to="{ name: 'newProject' }">
+        <img src="static/ico_new.svg" class="sidebar_icon" />
         {{$t('sidebar_bt_new_project')}}
     </router-link>
     <div class="sidebar_projects">
@@ -14,7 +13,7 @@
             class="sidebar_link"
             :to="{ name: 'project', params: { uid: project.uid } }"
             :title="project.name">
-        <img :src="'/static/ico_cat_' + project.category + '.svg'" class="sidebar_icon" /> {{project.name}} ({{project.nbItems}})
+        <img :src="'static/ico_cat_' + project.category + '.svg'" class="sidebar_icon" /> {{project.name}} ({{project.nbItems}})
         </router-link>
     </div>
     <div class="sidebar_bottom">
@@ -31,6 +30,7 @@
 
 <script>
   import { POSSIBLE_LANGUAGES } from '../../constantes.js'
+  import { mapState } from 'vuex'
 
   export default {
     name: 'sidebar',
@@ -47,9 +47,9 @@
           this.$store.dispatch('CHANGE_LANGUAGE', value)
         }
       },
-      projects: {
-        get () { return this.$store.state.Main.projects }
-      }
+      ...mapState({
+        projects: state => state.Main.projects
+      })
     },
     methods: {
       lang (code) {

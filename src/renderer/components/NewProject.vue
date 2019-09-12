@@ -1,18 +1,25 @@
 <template>
   <div class="main project_vue">
     <h2 class="new_project_title">{{$t('new_project_title')}}</h2>
-    <p class="new_project_input" ><input type="text" v-model="projectName"
+    <p v-if="errors.length">
+      <b class="msg_error">Please correct the following error(s):</b>
+      <ul>
+        <li class="msg_error" v-for="error in errors" :key="error">{{ error }}</li>
+      </ul>
+    </p>
+
+    <p class="new_project_input"><input type="text" v-model="projectName"
     :placeholder="$t('new_project_inputName')" /></p>
-    <p class="new_project_input" ><select v-model="projectCategory">
+    <p class="new_project_input"><select v-model="projectCategory">
       <option value="">{{$t('new_project_selectCategory')}}</option>
       <option value="job">{{$t('project_cat_job')}}</option>
       <option value="housing">{{$t('project_cat_housing')}}</option>
       <option value="shopping">{{$t('project_cat_shopping')}}</option>
     </select></p>
 
-    <p class="new_project_input" ><input type="text" v-model="projectUrl1"
+    <p class="new_project_input"><input type="text" v-model="projectUrl1"
     :placeholder="$t('new_project_inputUrl')" /></p>
-    <p class="new_project_action"><button @click="creer()">{{$t('new_project_action')}}</button></p>
+    <p class="new_project_action"><button @click="createProject()">{{$t('new_project_action')}}</button></p>
   </div>
 </template>
 
@@ -24,27 +31,50 @@ export default {
     return {
       projectName: '',
       projectCategory: '',
-      projectUrl1: ''
+      projectUrl1: '',
+      errors: []
     }
   },
   methods: {
-    creer () {
-      // get the next id
-      let maxUid = 0
-      this.$store.state.Main.projects.forEach(p => {
-        if (p.uid > maxUid) maxUid = p.uid
-      })
+    createProject () {
+      this.errors = []
+      // check forms
+      if (this.projectName === '') {
+        this.errors.push(this.$t('new_project_errName'))
+      }
+      if (this.projectCategory === '') {
+        this.errors.push(this.$t('new_project_errCategory'))
+      }
+      if (this.projectUrl1 === '') {
+        this.errors.push(this.$t('new_project_errUrl'))
+      }
 
-      let pUid = maxUid + 1
-      this.$store.dispatch('ADD_PROJECT', {
-        uid: pUid,
-        name: this.projectName,
-        projectCategory: this.projectCategory,
-        url: [this.projectUrl1]
-      })
+      if (this.errors.length === 0) {
+        // get the next id
+        let maxUid = 0
+        for (const uid in this.$store.state.Main.projects) {
+          if (uid > maxUid) maxUid = uid
+        }
 
-      this.$router.push({ name: 'project', params: { id: pUid } })
+        let pUid = parseInt(maxUid) + 1
+        this.$store.dispatch('ADD_PROJECT', {
+          uid: pUid,
+          name: this.projectName,
+          category: this.projectCategory,
+          url: [this.projectUrl1]
+        })
+        // FIXME : le menu n'est pas mis àç jour
+        this.$nextTick(() => {
+          this.$router.push({ name: 'project', params: { uid: pUid } })
+        })
+      }
     }
+  },
+  created: function () {
+    this.errors = []
+    this.projectUrl1 = ''
+    this.projectCategory = ''
+    this.projectName = ''
   }
 }
 </script>
@@ -75,5 +105,9 @@ export default {
   .new_project_action button{
     width: 200px;
     height: 2em;
+  }
+
+  .msg_error {
+    color: red;
   }
 </style>

@@ -18,6 +18,9 @@ export const i18n = new VueI18n({
       new_project_selectCategory: 'Choose a category',
       new_project_inputUrl: 'Paste here the first url for your request',
       new_project_action: 'Create',
+      new_project_errName: 'name',
+      new_project_errCategory: 'category',
+      new_project_errUrl: 'url',
       project_cat_job: 'Job',
       project_cat_housing: 'Housing',
       project_cat_shopping: 'Shopping'
