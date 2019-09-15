@@ -20,8 +20,9 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    width: 600,
-    height: 400,
+    width: 700,
+    height: 500,
+    autoHideMenuBar: true,
     useContentSize: true
   })
 
@@ -42,8 +43,8 @@ function createWindow () {
 function createParsingWindow () {
   // Create the browser window.
   parserWindow = new BrowserWindow({
-    width: 600,
-    height: 400,
+    width: 700,
+    height: 500,
     show: false,
     autoHideMenuBar: true,
     webPreferences: {

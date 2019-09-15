@@ -1,4 +1,5 @@
 import { DEFAULT_LANGUAGE } from '../../../constantes.js'
+import Vue from 'vue'
 
 const state = {
   language: DEFAULT_LANGUAGE,
@@ -19,7 +20,7 @@ const mutations = {
     state.language = code
   },
   ADD_PROJECT (state, project) {
-    state.projects[project.uid] = project
+    Vue.set(state.projects, project.uid, project)
   }
 }
 export default { state, mutations, actions }

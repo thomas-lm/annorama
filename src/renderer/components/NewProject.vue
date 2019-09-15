@@ -85,6 +85,7 @@ export default {
     padding-left: 3em;
     padding-right: 3em;
     max-width: 400px;
+    margin: auto;
   }
 
   .new_project_input {
