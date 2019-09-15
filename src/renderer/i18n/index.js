@@ -23,7 +23,10 @@ export const i18n = new VueI18n({
       new_project_errUrl: 'url',
       project_cat_job: 'Job',
       project_cat_housing: 'Housing',
-      project_cat_shopping: 'Shopping'
+      project_cat_shopping: 'Shopping',
+      project_bt_refresh: 'find new results',
+      project_bt_new_source: 'add new source',
+      project_bt_detail: 'customize this project'
     },
     fr: {
       app_title: 'Annorama',
@@ -37,7 +40,10 @@ export const i18n = new VueI18n({
       new_project_action: 'Créer',
       project_cat_job: 'Job',
       project_cat_housing: 'Immobilier',
-      project_cat_shopping: 'Shopping'
+      project_cat_shopping: 'Shopping',
+      project_bt_refresh: 'chercher les nouvelles annonces',
+      project_bt_new_source: 'ajouter une source',
+      project_bt_detail: 'paramètres du projet'
     }
   }
 })

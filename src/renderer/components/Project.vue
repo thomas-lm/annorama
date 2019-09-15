@@ -1,6 +1,14 @@
 <template>
   <div class="main" v-if="project">
-    <h1>project {{project.uid}}</h1>
+    <div class="project_header">
+      <span class="project_title">{{ project.name }} (#{{project.uid}})</span>
+      <img :title="$t('project_bt_refresh')" class="project_header_action" :src="'static/ico_refresh.svg'" />
+      <img :title="$t('project_bt_new_source')" class="project_header_action" :src="'static/ico_add.svg'" />
+      <img :title="$t('project_bt_detail')" class="project_header_action" :src="'static/ico_list.svg'" />
+    </div>
+    <div class="project_content">
+
+    </div>
   </div>
 </template>
 <script>
@@ -29,8 +37,42 @@ export default {
 </script>
 
 <style lang="scss">
-h1 {
-  font-size: 2em;
-  padding: 0 .5em;
+.project_header {
+  width: 100%;
+  height: 2em;
+  line-height: 2em;
+  background-color: #d7dfdb
+}
+
+.project_title {
+  padding: 0 0 0 .5em;
+  font-weight: 700;
+  max-width: calc(100% - 7.5em);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+  line-height: 2em;
+  height: 2em;
+}
+
+.project_header_action {
+  width: 1.5em;
+  height: 2em;
+  margin-left: .5em;
+  cursor: pointer;
+}
+
+.project_header_action:hover {
+  background-color: #9BA3A7;
+}
+
+.project_header_action img {
+  width: 100%;
+  height: 100%;
+}
+
+.project_content {
+  background-color : #fffaf6;
 }
 </style>

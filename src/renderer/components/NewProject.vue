@@ -1,5 +1,5 @@
 <template>
-  <div class="main project_vue">
+  <div class="main new_project_vue">
     <h2 class="new_project_title">{{$t('new_project_title')}}</h2>
     <p v-if="errors.length">
       <b class="msg_error">Please correct the following error(s):</b>
@@ -81,7 +81,7 @@ export default {
 
 <style>
 
-  .project_vue {
+  .new_project_vue {
     padding-left: 3em;
     padding-right: 3em;
     max-width: 400px;
