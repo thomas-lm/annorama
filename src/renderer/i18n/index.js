@@ -26,7 +26,8 @@ export const i18n = new VueI18n({
       project_cat_shopping: 'Shopping',
       project_bt_refresh: 'find new results',
       project_bt_new_source: 'add new source',
-      project_bt_detail: 'customize this project'
+      project_bt_detail: 'customize this project',
+      offer_link: 'open external offer'
     },
     fr: {
       app_title: 'Annorama',
@@ -43,7 +44,8 @@ export const i18n = new VueI18n({
       project_cat_shopping: 'Shopping',
       project_bt_refresh: 'chercher les nouvelles annonces',
       project_bt_new_source: 'ajouter une source',
-      project_bt_detail: 'paramètres du projet'
+      project_bt_detail: 'paramètres du projet',
+      offer_link: 'voir l\'annonce originale'
     }
   }
 })
