@@ -3,7 +3,8 @@ import { parseSearchUrl } from '../../parser/itemParser.js'
 const state = {
   currentUrl: '',
   searchItems: [],
-  errorMsg: ''
+  errorMsg: '',
+  currentNumberProcessingSearchs: 0
 }
 
 const actions = {
@@ -15,6 +16,7 @@ const actions = {
 const mutations = {
   LOAD_URL (state, url) {
     state.currentUrl = url
+    state.currentNumberProcessingSearchs++
     parseSearchUrl(url)
       .then(response => {
         state.errorMsg = ''

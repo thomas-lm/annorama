@@ -8,7 +8,7 @@
     <div class="sidebar_projects">
         <router-link
             v-for="project in projects"
-            v-bind:key="project.id"
+            v-bind:key="project.uid"
             active-class="activeRoute"
             class="sidebar_link"
             :to="{ name: 'project', params: { uid: project.uid } }"

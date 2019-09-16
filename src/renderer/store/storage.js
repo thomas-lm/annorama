@@ -56,7 +56,6 @@ export default class Storage {
    * @param {*} value
    */
   set (key, value) {
-    console.log('set value ', key, value)
     this.currentData[key] = value
     this.saveDataAsync()
   }

@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     ...mapState({
-      currentNumberProcessingSearchs: state => state.ProcessingRequest.number
+      currentNumberProcessingSearchs: state => state.Search.currentNumberProcessingSearchs
     })
   }
 }
