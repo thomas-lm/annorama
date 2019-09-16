@@ -65,7 +65,7 @@ export default {
             url: this.projectUrl1,
             lastRequest: undefined,
             itemNumber: 0
-            }]
+          }]
         })
         this.$nextTick(() => {
           this.$router.push({ name: 'project', params: { uid: pUid } })

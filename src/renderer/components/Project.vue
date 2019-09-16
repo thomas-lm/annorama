@@ -15,7 +15,7 @@
 <script>
 
 import { mapState } from 'vuex'
-import Offer from '@/components/Proect/Offer.vue'
+import Offer from '@/components/Project/Offer.vue'
 
 export default {
   name: 'project',
@@ -33,12 +33,12 @@ export default {
       this.project = this.$store.state.Main.projects[uid]
     },
     refreshProject () {
-      // Lance les requêtes de récupération des projets, compare avec l'existant et met à jour le contenu
-      this.project
+      this.$store.dispatch('REFRESH_PROJECT', this.uid)
     }
   },
   created () {
     this.getProject(this.uid)
+    
   },
   watch: {
     '$route' () {
