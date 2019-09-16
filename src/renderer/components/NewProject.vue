@@ -61,9 +61,12 @@ export default {
           uid: pUid,
           name: this.projectName,
           category: this.projectCategory,
-          url: [this.projectUrl1]
+          sources: [{
+            url: this.projectUrl1,
+            lastRequest: undefined,
+            itemNumber: 0
+            }]
         })
-        // FIXME : le menu n'est pas mis àç jour
         this.$nextTick(() => {
           this.$router.push({ name: 'project', params: { uid: pUid } })
         })

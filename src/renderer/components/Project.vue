@@ -6,7 +6,7 @@
       <img :title="$t('project_bt_new_source')" class="project_header_action" :src="'static/ico_add.svg'" />
       <img :title="$t('project_bt_detail')" class="project_header_action" :src="'static/ico_list.svg'" />
     </div>
-    <div class="project_loader" v-bind:class="{ animate : loading, hide: !loading }" ></div>
+    <div class="project_loader" v-bind:class="{ animate : currentProcessNumber > 0, hide: currentProcessNumber === 0 }" ></div>
     <div class="project_content">
       <Offer v-for="offer in project.offers" :key="offer.uid" v-bind:offer="offer" />
     </div>
@@ -14,7 +14,8 @@
 </template>
 <script>
 
-import Offer from '@/components/Project/Offer.vue'
+import { mapState } from 'vuex'
+import Offer from '@/components/Proect/Offer.vue'
 
 export default {
   name: 'project',
@@ -24,8 +25,7 @@ export default {
   props: ['uid'],
   data () {
     return {
-      project: null,
-      loading: false
+      project: null
     }
   },
   methods: {
@@ -33,11 +33,8 @@ export default {
       this.project = this.$store.state.Main.projects[uid]
     },
     refreshProject () {
-      if (this.loading) {
-        this.loading = false
-      } else {
-        this.loading = true
-      }
+      // Lance les requêtes de récupération des projets, compare avec l'existant et met à jour le contenu
+      this.project
     }
   },
   created () {
@@ -47,6 +44,11 @@ export default {
     '$route' () {
       this.getProject(this.uid)
     }
+  },
+  computed: {
+    ...mapState({
+      currentProcessNumber: state => state.Processing.currentProcessingRequest
+    })
   }
 }
 </script>
