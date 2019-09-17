@@ -4,34 +4,50 @@
  */
 import {parseSearchUrl} from './itemParser.js'
 
+ 
 function refreshProject (currentProject) {
-  console.log('refreshing project ', currentProject.uid)
+
   return new Promise(async (resolve) => {
-    let newOffers = []
-    let newSources = []
+  console.log('refreshing project ', currentProject.uid)
+  let parsePromise = []
+  for (const [uid, source] of Object.entries(currentProject.sources)) {
+    parsePromise.push(parseSearchUrl(source.url))
+  }//pas possible de gerer les exceptions une a une
+
+  return Promise.all(parsePromise)
+
+
+  /*
+  return new Promise(async (resolve) => {
+    let newOffers = {}
+    let newSources = {}
     for (const [uid, source] of Object.entries(currentProject.sources)) {
       // TODO Gérer la parralelisation (voir promise.all)
       try {
-        let offers = await parseSearchUrl(source)
+        let parseSearchUrl = import('./itemParser.js')
+
+        let offers = await parseSearchUrl(source.url)
         newSources[uid] = {
           uid: uid,
           url: source.url,
           lastRequest: new Date(),
           itemNumber: offers.length,
-          error: undefined
+          error: ''
         }
         // add source uid to prefix of offer uid
-        newOffers.push(offers.map((nof) => {
-          nof[uid] = source.uid + '-' + nof[uid]
-          return nof
-        }))
+        offers.forEach(offer => {
+          let nuid = source.uid + '-' + offer.uid
+          offer.uid = nuid
+          newOffers[nuid] = offer
+        })
       } catch (e) {
+        console.log(e)
         newSources[uid] = {
           uid: uid,
           url: source.url,
           lastRequest: new Date(),
           itemNumber: 0,
-          error: e
+          error: e.message
         }
       }
     }
@@ -41,7 +57,7 @@ function refreshProject (currentProject) {
     // TODO Trier les résultats
     // TODO Gérer les fusions
     resolve([newSources, newOffers])
-  })
+  })*/
 }
 
 export default { refreshProject }

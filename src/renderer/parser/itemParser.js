@@ -5,6 +5,7 @@ const files = require.context('./impl', false, /\.js$/)
 function parseSearchUrl (url) {
   return new Promise(function (resolve, reject) {
     let done = false
+    console.log('parse2', url)
     files.keys().forEach(element => {
       let unParser = require('./impl/' + element.replace('./', ''))
       if (unParser.canParse(url)) {

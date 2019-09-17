@@ -65,7 +65,7 @@ export default {
             '1': {
               uid: 1,
               url: this.projectUrl1,
-              lastRequest: undefined,
+              lastRequest: new Date(),
               itemNumber: 0
             }
           },
