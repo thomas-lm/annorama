@@ -2,14 +2,15 @@
  * Process of sorting, new offer with older
  * Update offers and project sources status
  */
-import {parseSearchUrl} from 'itemParser.js'
+import {parseSearchUrl} from './itemParser.js'
 
 function refreshProject (currentProject) {
+  console.log('refreshing project ', currentProject.uid)
   return new Promise(async (resolve) => {
     let newOffers = []
     let newSources = []
     for (const [uid, source] of Object.entries(currentProject.sources)) {
-      // TODO Gérer la parralelisation
+      // TODO Gérer la parralelisation (voir promise.all)
       try {
         let offers = await parseSearchUrl(source)
         newSources[uid] = {
@@ -39,7 +40,7 @@ function refreshProject (currentProject) {
     // TODO Suppression des anciens non sourcé
     // TODO Trier les résultats
     // TODO Gérer les fusions
-    resolve(newSources, newOffers)
+    resolve([newSources, newOffers])
   })
 }
 

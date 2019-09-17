@@ -33,7 +33,7 @@ export default {
       this.project = this.$store.state.Main.projects[uid]
     },
     refreshProject () {
-      this.$store.dispatch('REFRESH_PROJECT', this.uid)
+      this.$store.dispatch('REFRESH_OFFERS', this.uid)
     }
   },
   created () {
