@@ -38,7 +38,6 @@ export default {
   },
   created () {
     this.getProject(this.uid)
-    
   },
   watch: {
     '$route' () {

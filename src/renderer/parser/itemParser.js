@@ -3,7 +3,7 @@ import { ipcRenderer } from 'electron'
 const files = require.context('./impl', false, /\.js$/)
 
 function parseSearchUrl (url) {
-  return new Promise(function (resolve) {
+  return new Promise(function (resolve, reject) {
     let done = false
     files.keys().forEach(element => {
       let unParser = require('./impl/' + element.replace('./', ''))
@@ -17,7 +17,7 @@ function parseSearchUrl (url) {
       }
     })
     if (!done) {
-      throw new Error('no parser found for this url')
+      reject(new Error('no parser found for this url'))
     }
   })
 }
