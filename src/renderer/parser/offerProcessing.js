@@ -21,13 +21,13 @@ function refreshProject (currentProject) {
         }
         // add source uid to prefix of offer uid
         newOffers.push(offers.map((nof) => {
-            nof[uid] = source.uid + '-' + nof[uid]
-            return nof;
+          nof[uid] = source.uid + '-' + nof[uid]
+          return nof
         }))
       } catch (e) {
         newSources[uid] = {
           uid: uid,
-          url: url,
+          url: source.url,
           lastRequest: new Date(),
           itemNumber: 0,
           error: e

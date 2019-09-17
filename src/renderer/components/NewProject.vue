@@ -62,7 +62,7 @@ export default {
           name: this.projectName,
           category: this.projectCategory,
           sources: {
-            '1' : {
+            '1': {
               uid: 1,
               url: this.projectUrl1,
               lastRequest: undefined,

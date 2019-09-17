@@ -43,13 +43,13 @@ const actions = {
   REFRESH_OFFERS ({ commit }, uidProject) {
     return new Promise(async (resolve) => {
       try {
-        let {newSources, newOffers} = await refreshProject(state.projects[uidProject])
+        let [newSources, newOffers] = await refreshProject(state.projects[uidProject])
         commit('UPDATE_OFFERS', uidProject, newOffers)
         commit('UPDATE_SOURCES', uidProject, newSources)
-      } catch {
+      } catch (e) {
         console.log('Refresh Offers problems :', e)
       }
-      
+
       resolve()
     })
   }
