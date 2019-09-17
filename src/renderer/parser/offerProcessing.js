@@ -43,4 +43,4 @@ function refreshProject (currentProject) {
   })
 }
 
-export { refreshProject }
+export default { refreshProject }

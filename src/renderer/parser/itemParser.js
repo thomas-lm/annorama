@@ -26,4 +26,4 @@ function countRequestProcessing () {
   return ipcRenderer.sendSync('count-processing')
 }
 
-export { parseSearchUrl, countRequestProcessing }
+export default { parseSearchUrl, countRequestProcessing }

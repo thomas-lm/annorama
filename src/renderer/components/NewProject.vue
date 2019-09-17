@@ -61,13 +61,15 @@ export default {
           uid: pUid,
           name: this.projectName,
           category: this.projectCategory,
-          sources: [{
-            uid: 1,
-            url: this.projectUrl1,
-            lastRequest: undefined,
-            itemNumber: 0
-          }],
-          offers: []
+          sources: {
+            '1' : {
+              uid: 1,
+              url: this.projectUrl1,
+              lastRequest: undefined,
+              itemNumber: 0
+            }
+          },
+          offers: {}
         })
         this.$nextTick(() => {
           this.$router.push({ name: 'project', params: { uid: pUid } })
