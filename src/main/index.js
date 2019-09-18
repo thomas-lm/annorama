@@ -105,12 +105,10 @@ requestQueueProcessor()
 ipcMain.on('render-url', (e, source) => {
   if (currentProcessing !== undefined) {
     console.log('rendering url ', currentProcessing.url)
-    setTimeout(() => {
-      e.sender.send('render-url-reply')
-      currentProcessing.ipcEvent.sender.send('parse-url-reply', source)
-      parserWindow.hide()
-      currentProcessing = undefined
-    }, 3000)
+    e.sender.send('render-url-reply')
+    currentProcessing.ipcEvent.sender.send('parse-url-reply', source)
+    parserWindow.hide()
+    currentProcessing = undefined
   }
 })
 

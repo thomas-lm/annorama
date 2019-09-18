@@ -5,22 +5,28 @@
 import { parseSearchUrl } from './itemParser.js'
 
 function refreshSource (source) {
+  let newSource = {
+    uid: source.uid,
+    url: source.url,
+    lastRequest: source.lastRequest,
+    itemNumber: source.itemNumber,
+    error: source.error
+  }
   return new Promise((resolve) => {
     parseSearchUrl(source.url).then(values => {
-      source.lastRequest = new Date()
-      source.itemNumber = values.length
-      source.error = ''
+      newSource.lastRequest = new Date()
+      newSource.itemNumber = values.length
+      newSource.error = ''
       let newOffers = {}
       values.forEach(offer => {
         let nuid = source.uid + '-' + offer.uid
         offer.uid = nuid
         newOffers[nuid] = offer
       })
-      resolve({source, newOffers})
+      resolve({ source: newSource, offers: newOffers })
     }).catch(reason => {
-      console.log('error for source ', source, reason)
-      source.error = reason.message
-      resolve([source, {}])
+      newSource.error = reason.message
+      resolve({ source: newSource, offers: {} })
     })
   })
 }
@@ -31,25 +37,24 @@ function refreshProject (currentProject) {
   for (const source of Object.values(currentProject.sources)) {
     sourcePromises.push(refreshSource(source))
   }
-
   return new Promise((resolve) => {
-    Promise.all(sourcePromises).then(function (values) {
+    Promise.all(sourcePromises).then(function (results) {
       // Merge results
       let newOffers = {}
       let newSources = {}
 
-      for (const [source, offers] of values) {
-        newSources[source.uid] = source
-        offers.forEach(offer => {
+      for (const result of results) {
+        newSources[result.source.uid] = result.source
+        for (const offer of Object.values(result.offers)) {
           newOffers[offer.uid] = offer
-        })
+        }
       }
 
       // TODO Gérer les anciens
       // TODO Suppression des anciens non sourcé
       // TODO Trier les résultats
       // TODO Gérer les fusions
-      resolve(values)
+      resolve([newSources, newOffers])
     }).catch(e => {
       console.log('unexpected error in refreshing project', e)
     })

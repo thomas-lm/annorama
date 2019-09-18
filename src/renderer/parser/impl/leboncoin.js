@@ -31,7 +31,7 @@ function parse (source, url) {
     // get ID from url
     let itemId = itemUrl.substring(itemUrl.lastIndexOf('/') + 1, itemUrl.lastIndexOf('.'))
     let item = {
-      id: itemId,
+      uid: itemId,
       title: $e('span[itemprop="name"]').text().replace(/\s+/g, ' '),
       price: $e('span[itemprop="priceCurrency"]').text().replace(/\s+/g, ''),
       link: url + '/' + initUrl
