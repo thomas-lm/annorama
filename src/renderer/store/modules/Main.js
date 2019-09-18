@@ -25,7 +25,7 @@
  */
 
 import { DEFAULT_LANGUAGE } from '../../../constantes.js'
-import offerProcessing from '../../parser/offerProcessing.js'
+import { refreshProject } from '../../parser/offerProcessing.js'
 import Vue from 'vue'
 
 const state = {
@@ -41,7 +41,7 @@ const actions = {
     commit('ADD_PROJECT', project)
   },
   REFRESH_OFFERS (context, uidProject) {
-    let refreshPromise = offerProcessing.refreshProject(context.state.projects[uidProject])
+    let refreshPromise = refreshProject(context.state.projects[uidProject])
     refreshPromise.then(([newSources, newOffers]) => {
       context.commit('UPDATE_OFFERS', [uidProject, newOffers])
       context.commit('UPDATE_SOURCES', [uidProject, newSources])

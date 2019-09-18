@@ -81,6 +81,7 @@ var currentProcessing
  * Add in request queue
  */
 ipcMain.on('parse-url', (e, arg) => {
+  console.log('parsing request :', arg)
   parserEventList.unshift({url: arg, ipcEvent: e})
 })
 
@@ -103,10 +104,13 @@ requestQueueProcessor()
  */
 ipcMain.on('render-url', (e, source) => {
   if (currentProcessing !== undefined) {
-    e.sender.send('render-url-reply')
-    currentProcessing.ipcEvent.sender.send('parse-url-reply', source)
-    parserWindow.hide()
-    currentProcessing = undefined
+    console.log('rendering url ', currentProcessing.url)
+    setTimeout(() => {
+      e.sender.send('render-url-reply')
+      currentProcessing.ipcEvent.sender.send('parse-url-reply', source)
+      parserWindow.hide()
+      currentProcessing = undefined
+    }, 3000)
   }
 })
 
