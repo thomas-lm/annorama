@@ -2,7 +2,20 @@
  * Process of sorting, new offer with older
  * Update offers and project sources status
  */
-import { parseSearchUrl } from './itemParser.js'
+import { ipcRenderer } from 'electron'
+
+function parseUrlPromise (url) {
+  return new Promise(function (resolve, reject) {
+    ipcRenderer.once('parse-url-reply', (event, response) => {
+      if (response.error !== undefined) {
+        reject(new Error(response.error))
+      } else {
+        resolve(response)
+      }
+    })
+    ipcRenderer.send('parse-url', url)
+  })
+}
 
 function refreshSource (source) {
   let newSource = {
@@ -13,7 +26,7 @@ function refreshSource (source) {
     error: source.error
   }
   return new Promise((resolve) => {
-    parseSearchUrl(source.url).then(values => {
+    parseUrlPromise(source.url).then(values => {
       newSource.lastRequest = new Date()
       newSource.itemNumber = values.length
       newSource.error = ''

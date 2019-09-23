@@ -25,7 +25,7 @@
  */
 
 import { DEFAULT_LANGUAGE } from '../../../constantes.js'
-import { refreshProject } from '../../parser/offerProcessing.js'
+import { refreshProject } from '../offerProcessing.js'
 import Vue from 'vue'
 
 const state = {

@@ -17,7 +17,6 @@
         </router-link>
     </div>
     <div class="sidebar_bottom">
-        <router-link class="sidebar_link" to="/search">test Search</router-link>
         {{$t('sidebar_language')}}
         <select v-model="currentLanguage">
           <option v-for="language in languages" :value="language" :key="language">
