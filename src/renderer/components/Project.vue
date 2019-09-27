@@ -54,6 +54,9 @@ export default {
 
 <style lang="scss">
 .project_header {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 2em;
   line-height: 2em;
@@ -89,6 +92,9 @@ export default {
 }
 
 .project_loader {
+  position: absolute;
+  top: 2em;
+  left: 0;
   width: 100%;
   height: .5em;
   background: linear-gradient(90deg, #818f8e, #d7dfdb, #818f8e);
@@ -110,6 +116,13 @@ export default {
 }
 
 .project_content {
-  background-color : #fffaf6;
+  background-color: #fffaf6;
+  position: absolute;
+  top: 2em;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  overflow: hidden;
+  overflow-y: auto;
 }
 </style>

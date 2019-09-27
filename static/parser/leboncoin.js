@@ -29,11 +29,18 @@ function getOffers () {
 
     // Remove last / if exist
     if (itemUrl.lastIndexOf('/') === itemUrl.length - 1) {
-      itemUrl = itemUrl.substring(0, itemUrl.lastIndexOf('/'))
+      itemUrl = itemUrl.substring(0, itemUrl.lastIndexOf('/') - 1)
     }
 
     // get ID from url
     let itemId = itemUrl.substring(itemUrl.lastIndexOf('/') + 1, itemUrl.lastIndexOf('.'))
+
+    // image
+    let itemImage = element.querySelector('img')
+    if (itemImage !== undefined) {
+      urlImage = itemImage.getAttribute('src')
+//TODO Trigger download-required
+    }
 
     response.push({
       uid: itemId,

@@ -23,11 +23,16 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 700,
     height: 500,
+    show: false,
     autoHideMenuBar: true,
     useContentSize: true
   })
 
   mainWindow.loadURL(winURL)
+
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show()
+  })
 
   mainWindow.on('closed', () => {
     mainWindow = null

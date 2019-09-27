@@ -84,15 +84,6 @@
   overflow-y: auto;
 }
 
-.sidebar_projects::-webkit-scrollbar {
-  width: 10px;
-  background-color: #d2d7d9;
-}
-
-.sidebar_projects::-webkit-scrollbar-thumb {
-  background-color: #878f94;
-}
-
 .sidebar_bottom {
   position: absolute;
   bottom: 0;

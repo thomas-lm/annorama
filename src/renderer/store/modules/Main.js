@@ -57,9 +57,11 @@ const mutations = {
     Vue.set(state.projects, project.uid, project)
   },
   UPDATE_OFFERS (state, [uidProject, offers]) {
-    console.log('UPDATE_OFFERS : ', uidProject, offers)
+    console.log('UPDATE_OFFERS', offers)
+    if (state.projects[uidProject].offers === undefined) {
+      Vue.set(state.projects[uidProject], 'offers', {})
+    }
     for (const [uid, offer] of Object.entries(offers)) {
-      console.log('UPDATE_OFFERS', uid, offer)
       Vue.set(state.projects[uidProject].offers, uid, offer)
     }
   },

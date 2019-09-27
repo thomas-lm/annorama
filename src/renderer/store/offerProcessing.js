@@ -4,7 +4,7 @@
  */
 import { ipcRenderer } from 'electron'
 
-function parseUrlPromise (url) {
+function parseUrlPromise (source) {
   return new Promise(function (resolve, reject) {
     ipcRenderer.once('parse-url-reply', (event, response) => {
       if (response.error !== undefined) {
@@ -13,7 +13,7 @@ function parseUrlPromise (url) {
         resolve(response)
       }
     })
-    ipcRenderer.send('parse-url', url)
+    ipcRenderer.send('parse-url', { uid: source.uid, url: source.url })
   })
 }
 
@@ -26,7 +26,7 @@ function refreshSource (source) {
     error: source.error
   }
   return new Promise((resolve) => {
-    parseUrlPromise(source.url).then(values => {
+    parseUrlPromise(newSource).then(values => {
       newSource.lastRequest = new Date()
       newSource.itemNumber = values.length
       newSource.error = ''

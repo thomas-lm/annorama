@@ -2,19 +2,8 @@ const { ipcRenderer } = require('electron')
 
 document.addEventListener('DOMContentLoaded', function () {
   setTimeout(function() {
-    let iframeRecapcha = document.querySelector('iframe[src*="captcha"]')
-
-    if (iframeRecapcha) {
-      console.log('asking for captcha')
-      ipcRenderer.send('user-interact-required')
-    } else {
-      ipcRenderer.once('render-url-reply', () => {
-        console.log('reply to renderer')
-      })
-      console.log(getOffers())
-      // ipcRenderer.send('render-url', getOffers())
-    }
-  }, 5000)
+    ipcRenderer.send('render-url', getOffers())
+  }, 500)
 })
 
 /**

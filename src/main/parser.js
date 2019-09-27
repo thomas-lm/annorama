@@ -39,7 +39,8 @@ function parseUrl (parser, url, sender) {
       show: false,
       autoHideMenuBar: true,
       webPreferences: {
-        preload: path.resolve(__static, 'parser', parser.file)
+        preload: path.resolve(__static, 'parser', parser.file),
+        devTools: false
       }
     })
 
@@ -69,8 +70,8 @@ function parseUrl (parser, url, sender) {
  */
 function parserProcessing (parser) {
   if (parser.currentProcessing === undefined && parser.processingQueue.length > 0) {
-    console.log('processing ', parser.file, parser.currentProcessing.url)
     parser.currentProcessing = parser.processingQueue.shift()
+    console.log('processing ', parser.file, parser.currentProcessing.url)
     parser.processingWindow.loadURL(parser.currentProcessing.url)
   }
 }
@@ -108,6 +109,19 @@ ipcMain.on('render-url', (e, source) => {
  */
 ipcMain.on('user-interact-required', (e) => {
   console.log('user interaction needed from ', e.sender.webContents.parserType)
+  let parser = getCurrentParserOfType(e.sender.webContents.parserType)
+  if (parser && parser.currentProcessing) {
+    parser.processingWindow.show()
+  } else {
+    console.log('error no parser init')
+  }
+})
+
+/**
+ * Download image for item
+ */
+ipcMain.on('download-required', (e, url) => {
+  console.log('download required for ', e.sender.webContents.parserType, url)
   let parser = getCurrentParserOfType(e.sender.webContents.parserType)
   if (parser && parser.currentProcessing) {
     parser.processingWindow.show()
