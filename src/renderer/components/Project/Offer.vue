@@ -1,16 +1,24 @@
 <template>
   <article class="offer">
-    <h2>{{ offer.title }}</h2>
-    <p>
-      {{ offer.summary }}
-      <a @click="openLink(offer.link)">{{$t('offer_link')}}</a>.
+    <div class="offer_image_container">
+      <img class="offer_image" :src="getImageLink(offer.mainImageFileName)" />
+    </div>
+    <h2 class="offer_title">{{ offer.title }}</h2>
+    <p class="offer_desc">
+      {{ offer.summary }}<br />
+      <a @click="openLink(offer.link)">{{ $t('offer_link') }}</a>
+      <span class="offer_last_update" :v-if="offer.lastUpdate" :title="$d(new Date(offer.lastUpdate), 'timeShort')">
+        {{ $t('project_offer_update_date') }} {{ $d(new Date(offer.lastUpdate), 'dateShort') }}
+      </span>
     </p>
   </article>
 </template>
 
 <script>
 
-import { shell } from 'electron'
+import { shell, remote } from 'electron'
+import path from 'path'
+import { APP_IMAGE_STORE_DIR } from '../../../constantes.js'
 
 export default {
   name: 'Offer',
@@ -20,11 +28,57 @@ export default {
   methods: {
     openLink (url) {
       shell.openExternal(url)
+    },
+    getImageLink (imageName) {
+      if (imageName) {
+        return 'file://' + path.join(remote.app.getPath('userData'), APP_IMAGE_STORE_DIR, imageName)
+      }
+      return ''
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
+  .offer {
+    position: relative;
+    margin: .5em;
+    padding: .5em;
+    height: 4em;
+    background-color: #FFE9D9;
+    color: #878F94;
+  }
 
+  .offer_image_container {
+    height: 4em;
+    width: 7em;
+    background-color: #FFFAF6;
+    text-align: center;
+    float: left;
+  }
+
+  .offer_image {
+    max-height: 100%;
+    max-width: 100%;
+  }
+
+  .offer_title {
+    margin: 0 0 0 8em;
+    line-height: 1em;
+    font-size: 1em;
+    padding: 0;
+  }
+
+  .offer_desc {
+    margin: .5em .5em 0 8em;
+  }
+
+  .offer_desc a {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .offer_last_update {
+    float: right;
+  }
 </style>

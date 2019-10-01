@@ -8,6 +8,7 @@
       <div class="content">
         <router-view></router-view>
       </div>
+      <Statusbar />
     </main>
   </div>
 </template>
@@ -15,11 +16,13 @@
 <script>
   import { mapState } from 'vuex'
   import Sidebar from '@/components/Sidebar.vue'
+  import Statusbar from '@/components/Statusbar.vue'
 
   export default {
     name: 'annorama',
     components: {
-      Sidebar
+      Sidebar,
+      Statusbar
     },
     computed: {
       ...mapState({
@@ -37,6 +40,10 @@
 </script>
 
 <style lang="scss">
+body {
+  overflow-x: hidden;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -45,21 +52,13 @@
   cursor: default;
 }
 
-.sidebar {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 170px;
-  background-color: #d2d7d9;
-}
-
 .content {
   position: absolute;
   left: 170px;
   top: 0;
-  bottom: 0;
+  bottom: 1.5em;
   right: 0;
+  min-width: 530px;
   background-color: #FFFAF6;
   color: #91a19a;
 }

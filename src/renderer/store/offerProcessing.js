@@ -13,7 +13,7 @@ function parseUrlPromise (source) {
         resolve(response)
       }
     })
-    ipcRenderer.send('parse-url', { uid: source.uid, url: source.url })
+    ipcRenderer.send('parse-url', source.url)
   })
 }
 
@@ -74,4 +74,14 @@ function refreshProject (currentProject) {
   })
 }
 
-export { refreshProject }
+function countProcessing () {
+  // console.log('ask for count processing')
+  return new Promise(function (resolve) {
+    ipcRenderer.once('count-processing-reply', (event, response) => {
+      resolve(response)
+    })
+    ipcRenderer.send('count-processing')
+  })
+}
+
+export { refreshProject, countProcessing }

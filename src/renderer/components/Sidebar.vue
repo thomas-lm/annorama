@@ -16,45 +16,18 @@
         <img :src="'static/ico_cat_' + project.category + '.svg'" class="sidebar_icon" /> {{project.name}} ({{project.nbItems}})
         </router-link>
     </div>
-    <div class="sidebar_bottom">
-        {{$t('sidebar_language')}}
-        <select v-model="currentLanguage">
-          <option v-for="language in languages" :value="language" :key="language">
-            {{ language }}
-          </option>
-        </select>
-    </div>
   </aside>
 </template>
 
 <script>
-  import { POSSIBLE_LANGUAGES } from '../../constantes.js'
   import { mapState } from 'vuex'
 
   export default {
     name: 'sidebar',
-    data: function () {
-      return {
-        languages: POSSIBLE_LANGUAGES
-      }
-    },
     computed: {
-      currentLanguage: {
-        get () { return this.$store.state.Main.language },
-        set (value) {
-          this.$i18n.locale = value
-          this.$store.dispatch('CHANGE_LANGUAGE', value)
-        }
-      },
       ...mapState({
         projects: state => state.Main.projects
       })
-    },
-    methods: {
-      lang (code) {
-        this.$i18n.locale = code
-        this.$store.dispatch('CHANGE_LANGUAGE', code)
-      }
     }
   }
 </script>
@@ -65,7 +38,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  bottom: 0;
+  bottom: 1.5em;
   width: 170px;
   background-color: #d2d7d9;
 }
@@ -73,23 +46,14 @@
 .sidebar_projects {
   position: absolute;
   top: 5em;
-  bottom: 4em;
-  border-style: dotted;
+  bottom: 0em;
   border-top-width: 1px;
-  border-bottom-width: 1px;
+  border-bottom-width: 0;
   border-left-width: 0;
   border-right-width: 0;
   width: 100%;
   overflow: hidden;
   overflow-y: auto;
-}
-
-.sidebar_bottom {
-  position: absolute;
-  bottom: 0;
-  height: 4em;
-  width: 100%;
-  text-align: center;
 }
 
 .sidebar_title {

@@ -4,9 +4,9 @@
       <span class="project_title">{{ project.name }} (#{{project.uid}})</span>
       <img :title="$t('project_bt_refresh')" class="project_header_action" :src="'static/ico_refresh.svg'" @click="refreshProject()"/>
       <img :title="$t('project_bt_new_source')" class="project_header_action" :src="'static/ico_add.svg'" />
-      <img :title="$t('project_bt_detail')" class="project_header_action" :src="'static/ico_list.svg'" />
+      <img :title="$t('project_bt_detail')" class="project_header_action" :src="'static/ico_list.svg'"/>
     </div>
-    <div class="project_loader" v-bind:class="{ animate : currentProcessNumber > 0, hide: currentProcessNumber === 0 }" ></div>
+    <div class="project_loader" v-bind:class="{ animate : currentProcessNumber > 0, hide : currentProcessNumber === 0 }" ></div>
     <div class="project_content">
       <Offer v-for="offer in project.offers" :key="offer.uid" v-bind:offer="offer" />
     </div>
@@ -34,6 +34,7 @@ export default {
     },
     refreshProject () {
       this.$store.dispatch('REFRESH_OFFERS', this.uid)
+      this.$store.dispatch('REFRESH_PROCESSING')
     }
   },
   created () {
@@ -46,7 +47,7 @@ export default {
   },
   computed: {
     ...mapState({
-      currentProcessNumber: state => state.Processing.currentProcessingRequest
+      currentProcessNumber: state => parseInt(state.Processing.currentProcessingRequest)
     })
   }
 }
@@ -99,6 +100,7 @@ export default {
   height: .5em;
   background: linear-gradient(90deg, #818f8e, #d7dfdb, #818f8e);
   background-size: 200%;
+  z-index: 2;
 }
 
 .project_loader.hide {

@@ -8,7 +8,7 @@ export const i18n = new VueI18n({
   local: DEFAULT_LANGUAGE,
   fallbackLocale: DEFAULT_LANGUAGE,
   messages: {
-    en: {
+    'en-US': {
       app_title: 'Annorama',
       sidebar_title: 'Projects',
       sidebar_bt_new_project: 'start new project',
@@ -27,9 +27,10 @@ export const i18n = new VueI18n({
       project_bt_refresh: 'find new results',
       project_bt_new_source: 'add new source',
       project_bt_detail: 'customize this project',
+      project_offer_update_date: 'last update ',
       offer_link: 'open external offer'
     },
-    fr: {
+    'fr-FR': {
       app_title: 'Annorama',
       sidebar_title: 'Projets',
       sidebar_bt_new_project: 'démarrer un projet',
@@ -45,7 +46,26 @@ export const i18n = new VueI18n({
       project_bt_refresh: 'chercher les nouvelles annonces',
       project_bt_new_source: 'ajouter une source',
       project_bt_detail: 'paramètres du projet',
+      project_offer_update_date: 'mis à jour le',
       offer_link: 'voir l\'annonce originale'
+    }
+  },
+  dateTimeFormats: {
+    'en-US': {
+      dateShort: {
+        year: 'numeric', month: 'short', day: 'numeric'
+      },
+      timeShort: {
+        minute: 'numeric', hour: 'numeric', hour12: true
+      }
+    },
+    'fr-FR': {
+      dateShort: {
+        year: 'numeric', month: 'short', day: 'numeric'
+      },
+      timeShort: {
+        minute: 'numeric', hour: 'numeric'
+      }
     }
   }
 })
