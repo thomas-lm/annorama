@@ -11,7 +11,7 @@
     </div>
     <div class="project_loader" v-bind:class="{ animate : currentProcessNumber > 0, hide : currentProcessNumber === 0 }" ></div>
     <div class="project_content">
-      <Offer v-for="offer in project.offers" :key="offer.uid" v-bind:offer="offer" />
+      <Offer v-for="offer in getSortedOffers()" :key="offer.uid" v-bind:offer="offer" />
     </div>
   </div>
 </template>
@@ -35,6 +35,23 @@ export default {
   methods: {
     getProject (uid) {
       this.project = this.$store.state.Main.projects[uid]
+    },
+    getSortedOffers () {
+      // Trie par date de creation
+      return Object.values(this.project.offers).sort((a, b) => {
+        if (a.creationDate === b.creationDate) {
+          return 0
+        } else if (a.creationDate && b.creationDate) {
+          return a.creationDate > b.creationDate ? -1 : 1
+        } else if (a.creationDate) {
+          return -1
+        } else if (b.creationDate) {
+          return 1
+        } else {
+          // Tri par défaut
+          return a.uid < b.uid
+        }
+      })
     },
     refreshProject () {
       this.$store.dispatch('REFRESH_OFFERS', this.uid)
