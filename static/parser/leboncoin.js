@@ -73,7 +73,8 @@ function getOffers () {
         title: element.querySelector('span[itemprop="name"]').textContent,
         price: element.querySelector('span[itemprop="priceCurrency"]').textContent,
         link: window.location.hostname + initUrl,
-        lastUpdate: new Date()
+        lastUpdate: new Date(),
+        creationDate: new Date()
       })
     }
   })

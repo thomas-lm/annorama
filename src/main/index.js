@@ -27,7 +27,8 @@ function createWindow () {
     autoHideMenuBar: true,
     useContentSize: true,
     webPreferences: {
-      webSecurity: false
+      webSecurity: false,
+      devTools: true
     }
   })
 

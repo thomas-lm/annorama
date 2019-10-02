@@ -62,11 +62,6 @@ function refreshProject (currentProject) {
           newOffers[offer.uid] = offer
         }
       }
-
-      // TODO Gérer les anciens
-      // TODO Suppression des anciens non sourcé
-      // TODO Trier les résultats
-      // TODO Gérer les fusions
       resolve([newSources, newOffers])
     }).catch(e => {
       console.log('unexpected error in refreshing project', e)

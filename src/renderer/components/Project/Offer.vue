@@ -7,8 +7,8 @@
     <p class="offer_desc">
       {{ offer.summary }}<br />
       <a @click="openLink(offer.link)">{{ $t('offer_link') }}</a>
-      <span class="offer_last_update" :v-if="offer.lastUpdate" :title="$d(new Date(offer.lastUpdate), 'timeShort')">
-        {{ $t('project_offer_update_date') }} {{ $d(new Date(offer.lastUpdate), 'dateShort') }}
+      <span class="offer_last_update" v-if="Date.parse(offer.creationDate)" :title="$d(new Date(offer.creationDate), 'timeShort')">
+        {{ $d(new Date(offer.creationDate), 'dateShort') }}
       </span>
     </p>
   </article>

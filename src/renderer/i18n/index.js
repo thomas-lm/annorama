@@ -27,7 +27,7 @@ export const i18n = new VueI18n({
       project_bt_refresh: 'find new results',
       project_bt_new_source: 'add new source',
       project_bt_detail: 'customize this project',
-      project_offer_update_date: 'last update ',
+      project_input_add_source_placeholder: 'Paste here the url for your request',
       offer_link: 'open external offer'
     },
     'fr-FR': {
@@ -46,7 +46,7 @@ export const i18n = new VueI18n({
       project_bt_refresh: 'chercher les nouvelles annonces',
       project_bt_new_source: 'ajouter une source',
       project_bt_detail: 'paramètres du projet',
-      project_offer_update_date: 'mis à jour le',
+      project_input_add_source_placeholder: 'Coller ici l\'url de votre recherche',
       offer_link: 'voir l\'annonce originale'
     }
   },

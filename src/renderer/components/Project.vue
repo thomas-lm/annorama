@@ -2,9 +2,12 @@
   <div class="main" v-if="project">
     <div class="project_header">
       <span class="project_title">{{ project.name }} (#{{project.uid}})</span>
-      <img :title="$t('project_bt_refresh')" class="project_header_action" :src="'static/ico_refresh.svg'" @click="refreshProject()"/>
-      <img :title="$t('project_bt_new_source')" class="project_header_action" :src="'static/ico_add.svg'" />
+      <img :title="$t('project_bt_refresh')" class="project_header_action" :src="'static/ico_refresh.svg'" @click="refreshProject"/>
+      <img :title="$t('project_bt_new_source')" class="project_header_action" :src="'static/ico_add.svg'" @click="displayAddSource" />
       <img :title="$t('project_bt_detail')" class="project_header_action" :src="'static/ico_list.svg'"/>
+    </div>
+    <div class="add_source_container" :class="{ hide : !add_source_show }" @click="hideAddSource">
+      <input class="add_source_input" ref="addsourceinput" type="text" :placeholder="$t('project_input_add_source_placeholder')" @keyup.enter="addSource"/>
     </div>
     <div class="project_loader" v-bind:class="{ animate : currentProcessNumber > 0, hide : currentProcessNumber === 0 }" ></div>
     <div class="project_content">
@@ -25,7 +28,8 @@ export default {
   props: ['uid'],
   data () {
     return {
-      project: null
+      project: null,
+      add_source_show: false
     }
   },
   methods: {
@@ -35,6 +39,37 @@ export default {
     refreshProject () {
       this.$store.dispatch('REFRESH_OFFERS', this.uid)
       this.$store.dispatch('REFRESH_PROCESSING')
+    },
+    displayAddSource () {
+      this.add_source_show = true
+      this.$nextTick(() => {
+        this.$refs.addsourceinput.focus()
+      })
+    },
+    hideAddSource (e) {
+      if (e.target.classList.contains('add_source_container')) {
+        this.add_source_show = false
+      }
+    },
+    addSource () {
+      let val = this.$refs.addsourceinput.value
+      if (val) {
+        let uid = 1
+        for (var sourceUid in this.project.sources) {
+          if (sourceUid > uid) {
+            uid = sourceUid
+          }
+        }
+        let newSource = {
+          uid: uid + 1,
+          url: val,
+          lastRequest: new Date(),
+          itemNumber: 0
+        }
+        this.$store.dispatch('ADD_SOURCE', [this.uid, newSource])
+      }
+      this.$refs.addsourceinput.value = ''
+      this.add_source_show = false
     }
   },
   created () {
@@ -126,5 +161,31 @@ export default {
   bottom: 0;
   overflow: hidden;
   overflow-y: auto;
+}
+
+.add_source_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.add_source_container.hide {
+  display: none;
+}
+
+.add_source_input {
+  position: absolute;
+  width: 400px;
+  margin: 4em auto;
+  height: 2em;
+  left: calc(50% - 200px);
+  background-color: #FFFAF6;
+  padding: .3em;
+  border: 1px solid #878F94;
+  z-index: 2;
 }
 </style>
