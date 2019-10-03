@@ -102,7 +102,7 @@ const mutations = {
     // Create new offer
     for (const [uid, offer] of Object.entries(updatedOffers)) {
       if (!existingKeys.includes(uid)) {
-        console.log('create ', uid)
+        // console.log('create ', uid)
         Vue.set(state.projects[uidProject].offers, uid, offer)
       }
     }

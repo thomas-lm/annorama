@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
   let iframeRecapcha = document.querySelector('iframe[src*="captcha"]')
 
   if (iframeRecapcha) {
-    console.log('asking for captcha')
     ipcRenderer.send('user-interact-required')
   } else {
     ipcRenderer.once('render-url-reply', () => {
@@ -20,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
         var offers = getOffers()
         ipcRenderer.send('render-url', offers)
       } catch (error) {
-        console.log(error)
         ipcRenderer.send('render-url-error', error)
       }
     })

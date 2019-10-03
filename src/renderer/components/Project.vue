@@ -78,7 +78,7 @@ export default {
           }
         }
         let newSource = {
-          uid: uid + 1,
+          uid: parseInt(uid) + 1,
           url: val,
           lastRequest: new Date(),
           itemNumber: 0

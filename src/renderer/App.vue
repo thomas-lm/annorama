@@ -31,9 +31,9 @@
     },
     mounted: function () {
       this.$nextTick(function () {
-        console.log('created window in ', this.currentLanguage)
+        // console.log('created window in ', this.currentLanguage)
         this.$i18n.locale = this.currentLanguage
-        console.log(this.$i18n)
+        // console.log(this.$i18n)
       })
     }
   }

@@ -20,11 +20,11 @@ Vue.use(Vuex)
 // Local hdd storage
 const vuePersist = new VuexPersistence({
   saveState: (key, state, storage) => {
-    console.log('save state ', key, state, storage)
+    // console.log('save state ', key, state, storage)
     userStorage.set(key, state)
   },
   restoreState: (key, storage) => {
-    console.log('restore state ', key, storage)
+    // console.log('restore state ', key, storage)
     return userStorage.get(key)
   },
   modules: ['Main']

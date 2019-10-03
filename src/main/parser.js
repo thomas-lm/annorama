@@ -14,32 +14,32 @@ if (app === undefined) {
 
 // Create directory
 if (!fs.existsSync(userImagesStoragePath)) {
-  console.log('create directory ', userImagesStoragePath)
+  // console.log('create directory ', userImagesStoragePath)
   fs.mkdirSync(userImagesStoragePath)
 }
 
 const parsers = [
   { file: 'leboncoin.js', imageDirName: 'leboncoin', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}leboncoin\.fr\/recherche\/.*$/ },
+  { file: 'ouestfranceimmo.js', imageDirName: 'ouestfranceimmo', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}ouestfrance-immo\.com\/(louer|acheter)\/.*$/ },
   { file: 'orpi.js', imageDirName: 'orpi', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}orpi\.com\/recherche\/.*$/ }
 ]
 
 /**
  * Main entry point to parse url
  */
-ipcMain.on('parse-url', (e, url) => {
-  console.log('parsing request :', url, 'for', parsers)
+ipcMain.on('parse-url', (e, url, suid) => {
   let found = false
   // Detect if a parser exist for this url
   parsers.forEach(aParser => {
     if (found === false && aParser.urlRegexp.test(url)) {
       // Found a parser
       found = true
-      parseUrl(aParser, url, e.sender)
+      parseUrl(aParser, url, suid, e.sender)
     }
   })
   if (found === false) {
     console.log('no parser found')
-    e.sender.send('parse-url-reply', {
+    e.sender.send('parse-url-reply-' + suid, {
       error: 'no parser found'
     })
   }
@@ -48,7 +48,7 @@ ipcMain.on('parse-url', (e, url) => {
 /**
  * initialise and add to queue the url to parse
  */
-function parseUrl (parser, url, sender) {
+function parseUrl (parser, url, suid, sender) {
   if (parser.processingWindow === undefined) {
     // Init processing window
     parser.processingWindow = new BrowserWindow({
@@ -80,7 +80,7 @@ function parseUrl (parser, url, sender) {
   }
 
   // add to queue
-  parser.processingQueue.push({ url, sender })
+  parser.processingQueue.push({ url, suid, sender })
 }
 
 /**
@@ -89,7 +89,7 @@ function parseUrl (parser, url, sender) {
 function parserProcessing (parser) {
   if (parser.currentProcessing === undefined && parser.processingQueue.length > 0) {
     parser.currentProcessing = parser.processingQueue.shift()
-    console.log('processing ', parser.file, parser.currentProcessing.url)
+    console.log('processing ', parser.file, parser.currentProcessing.url, parser.currentProcessing.suid)
     // parser.processingWindow.show()
     parser.processingWindow.loadURL(parser.currentProcessing.url)
   }
@@ -115,7 +115,7 @@ ipcMain.on('render-url', (e, source) => {
   let parser = getCurrentParserOfType(e.sender.webContents.parserType)
   if (parser && parser.currentProcessing) {
     e.sender.send('render-url-reply')
-    parser.currentProcessing.sender.send('parse-url-reply', source)
+    parser.currentProcessing.sender.send('parse-url-reply-' + parser.currentProcessing.suid, source)
     parser.processingWindow.hide()
     parser.currentProcessing = undefined
   } else {
@@ -128,7 +128,7 @@ ipcMain.on('render-url-error', (e, error) => {
   let parser = getCurrentParserOfType(e.sender.webContents.parserType)
   if (parser && parser.currentProcessing) {
     e.sender.send('render-url-error-reply')
-    parser.currentProcessing.sender.send('parse-url-reply', { error: error })
+    parser.currentProcessing.sender.send('parse-url-reply-' + parser.currentProcessing.suid, { error: error })
     parser.processingWindow.hide()
     parser.currentProcessing = undefined
   } else {
@@ -153,7 +153,7 @@ ipcMain.on('user-interact-required', (e) => {
  * Download image for item sync
  */
 ipcMain.on('download-required-sync', (e, url) => {
-  console.log('download required for ', e.sender.webContents.parserType, url)
+  // console.log('download required for ', e.sender.webContents.parserType, url)
   let parser = getCurrentParserOfType(e.sender.webContents.parserType)
   if (parser && parser.currentProcessing) {
     const basePath = path.join(userImagesStoragePath, parser.imageDirName)

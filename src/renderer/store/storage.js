@@ -9,16 +9,13 @@ export default class Storage {
 
     // Create directory
     if (!fs.existsSync(basedir)) {
-      console.log('create directory ', basedir)
       fs.mkdirSync(basedir)
     }
 
     if (fs.existsSync(this.filePath) === false) {
-      console.log('settings file not exist : ', this.filePath)
       this.saveData()
     } else {
       try {
-        console.log('loading settings in ', this.filePath)
         this.currentData = { ...this.currentData, ...this.loadData() }
       } catch (e) {
         console.log('error loading data :', e)

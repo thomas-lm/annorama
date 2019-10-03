@@ -4,20 +4,22 @@
  */
 import { ipcRenderer } from 'electron'
 
-function parseUrlPromise (source) {
+function parseUrlPromise (projectUid, source) {
+  let uniqueUid = projectUid + '-' + source.uid
   return new Promise(function (resolve, reject) {
-    ipcRenderer.once('parse-url-reply', (event, response) => {
+    ipcRenderer.once('parse-url-reply-' + uniqueUid, (event, response) => {
       if (response.error !== undefined) {
+        console.log('parseUrlResp error', source, uniqueUid, response.error)
         reject(new Error(response.error))
       } else {
         resolve(response)
       }
     })
-    ipcRenderer.send('parse-url', source.url)
+    ipcRenderer.send('parse-url', source.url, uniqueUid)
   })
 }
 
-function refreshSource (source) {
+function refreshSource (projectUid, source) {
   let newSource = {
     uid: source.uid,
     url: source.url,
@@ -26,7 +28,7 @@ function refreshSource (source) {
     error: source.error
   }
   return new Promise((resolve) => {
-    parseUrlPromise(newSource).then(values => {
+    parseUrlPromise(projectUid, newSource).then(values => {
       newSource.lastRequest = new Date()
       newSource.itemNumber = values.length
       newSource.error = ''
@@ -48,10 +50,11 @@ function refreshProject (currentProject) {
   // Instantiate all promise
   let sourcePromises = []
   for (const source of Object.values(currentProject.sources)) {
-    sourcePromises.push(refreshSource(source))
+    sourcePromises.push(refreshSource(currentProject.uid, source))
   }
   return new Promise((resolve) => {
     Promise.all(sourcePromises).then(function (results) {
+      // console.log('all promise result', results)
       // Merge results
       let newOffers = {}
       let newSources = {}
