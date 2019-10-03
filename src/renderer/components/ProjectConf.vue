@@ -13,7 +13,7 @@
       <h3>Sources (à traduire)</h3>
       <ul>
         <li v-for="source in project.sources" :key="source.uid" v-bind:source="source">
-          {{source.uid}} {{source.url}} ({{source.itemNumber}} {{$t('project_conf_offers')}} {{$d(source.lastRequest, 'dateShort')}})
+          {{source.uid}} <input :value="source.url" /> ({{source.itemNumber}} {{$t('project_conf_offers')}} {{$d(source.lastRequest, 'dateShort')}})
         </li>
       </ul>
       <h3>Annonces masquée (à traduire)</h3>

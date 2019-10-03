@@ -1,28 +1,23 @@
 LOT 1
 
-à chaque mise à jour :
-- ne mettre à jour que la date de derniere vue
-- ajouter une date de création
-- trier les résultats par date de création
-- évolution du prix
-
 page de détail d'un projet
 - liste des sources avec status (date d'upatde et message d'erreur éventuel)
 - supprimer une sources
 - clean des offres non mise à jour
 - clean des offres sans sources
-
 - Masquer une offre
-- Fusionner des offres similaires
+- voir les offres masquées (filtre bouton)
+
+Voir le détail d'une annonce:
+- évolution du prix
+- date de mise à jour
+- photos
+- description
 
 parser :
-Leboncoin /
-orpi
 logic-immo.com
-iad
 bienici.com
 seloger.com
-ouest-france-immo.com
 paruvendu.fr
 avendrealouer.fr
 squarehabitat
@@ -33,11 +28,13 @@ immobilier-notaire
 thierry-immobilier
 ajp-immombilier
 immobliier figaro
-century21
 nexity
 guy hoquet
 
 LOTs suivants
+- Fusionner des offres similaires
 - tri de la liste par prix/date asc, dsc (choix)
 - recherche directe par type
 - detection auto des annonces similaires
+- Tagger une annonces
+- annoter

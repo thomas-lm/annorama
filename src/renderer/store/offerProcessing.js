@@ -12,7 +12,6 @@ function parseUrlPromise (projectUid, source) {
         console.log('parseUrlResp error', source, uniqueUid, response.error)
         reject(new Error(response.error))
       } else {
-        console.log(response)
         resolve(response)
       }
     })

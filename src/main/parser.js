@@ -21,7 +21,9 @@ if (!fs.existsSync(userImagesStoragePath)) {
 const parsers = [
   { file: 'leboncoin.js', imageDirName: 'leboncoin', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}leboncoin\.fr\/recherche\/.*$/ },
   { file: 'ouestfranceimmo.js', imageDirName: 'ouestfranceimmo', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}ouestfrance-immo\.com\/(louer|acheter)\/.*$/ },
-  { file: 'orpi.js', imageDirName: 'orpi', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}orpi\.com\/recherche\/.*$/ }
+  { file: 'orpi.js', imageDirName: 'orpi', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}orpi\.com\/recherche\/.*$/ },
+  { file: 'iadfrance.js', imageDirName: 'iadfrance', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}iadfrance\.fr\/rechercher\/.*$/ },
+  { file: 'century21.js', imageDirName: 'century21', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}century21\.fr\/annonces\/.*$/ }
 ]
 
 /**
@@ -89,9 +91,17 @@ function parseUrl (parser, url, suid, sender) {
 function parserProcessing (parser) {
   if (parser.currentProcessing === undefined && parser.processingQueue.length > 0) {
     parser.currentProcessing = parser.processingQueue.shift()
+    parser.currentProcessing.startDate = new Date()
     console.log('processing ', parser.file, parser.currentProcessing.url, parser.currentProcessing.suid)
     // parser.processingWindow.show()
     parser.processingWindow.loadURL(parser.currentProcessing.url)
+  } else if (parser.currentProcessing !== undefined) {
+    // Timeout if > 30s
+    if (new Date().getTime() - parser.currentProcessing.startDate.getTime() > 30000) {
+      parser.currentProcessing.sender.send('parse-url-reply-' + parser.currentProcessing.suid, { error: 'parsing timeout' })
+      parser.processingWindow.hide()
+      parser.currentProcessing = undefined
+    }
   }
 }
 
@@ -153,7 +163,7 @@ ipcMain.on('user-interact-required', (e) => {
  * Download image for item sync
  */
 ipcMain.on('download-required-sync', (e, url) => {
-  // console.log('download required for ', e.sender.webContents.parserType, url)
+  console.log('download required for ', e.sender.webContents.parserType, url)
   let parser = getCurrentParserOfType(e.sender.webContents.parserType)
   if (parser && parser.currentProcessing) {
     const basePath = path.join(userImagesStoragePath, parser.imageDirName)
@@ -166,6 +176,7 @@ ipcMain.on('download-required-sync', (e, url) => {
     const filePath = path.join(basePath, filename)
 
     const file = fs.createWriteStream(filePath)
+
     if (url.startsWith('https')) {
       https.get(url, function (response) {
         response.pipe(file)

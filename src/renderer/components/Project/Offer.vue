@@ -3,9 +3,9 @@
     <div class="offer_image_container">
       <img class="offer_image" :src="getImageLink(offer.mainImageFileName)" />
     </div>
-    <h2 class="offer_title">[{{ offer.uid }}] {{ offer.title }} - <b>{{ offer.price }}</b></h2>
+    <h2 class="offer_title">{{ offer.title }} - <b>{{ offer.price }}</b></h2>
     <p class="offer_desc">
-      {{ offer.summary }}<br />
+      <small>[{{ offer.uid }}]</small> {{ offer.summary }}<br />
       <a @click="openLink(offer.link)">{{ $t('offer_link') }}</a>
       <span class="offer_last_update" v-if="Date.parse(offer.creationDate)" :title="$d(new Date(offer.creationDate), 'timeShort')">
         {{ $d(new Date(offer.creationDate), 'dateShort') }}
