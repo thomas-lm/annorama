@@ -4,7 +4,9 @@
       <span class="project_title">{{ project.name }} (#{{project.uid}})</span>
       <img :title="$t('project_bt_refresh')" class="project_header_action" :src="'static/ico_refresh.svg'" @click="refreshProject"/>
       <img :title="$t('project_bt_new_source')" class="project_header_action" :src="'static/ico_add.svg'" @click="displayAddSource" />
-      <img :title="$t('project_bt_detail')" class="project_header_action" :src="'static/ico_list.svg'"/>
+      <router-link :to="{ name: 'projectConf', params: { uid: project.uid } }">
+        <img :title="$t('project_bt_detail')" class="project_header_action" :src="'static/ico_list.svg'"/>
+      </router-link>
     </div>
     <div class="add_source_container" :class="{ hide : !add_source_show }" @click="hideAddSource">
       <input class="add_source_input" ref="addsourceinput" type="text" :placeholder="$t('project_input_add_source_placeholder')" @keyup.enter="addSource"/>

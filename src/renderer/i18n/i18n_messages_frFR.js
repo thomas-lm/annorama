@@ -14,6 +14,9 @@ export default {
   project_bt_refresh: 'chercher les nouvelles annonces',
   project_bt_new_source: 'ajouter une source',
   project_bt_detail: 'paramètres du projet',
+  project_bt_main: 'revenir aux annonces',
   project_input_add_source_placeholder: 'Coller ici l\'url de votre recherche',
+  project_conf_offer: 'annonce',
+  project_conf_offers: 'annonces',
   offer_link: 'voir l\'annonce originale'
 }
