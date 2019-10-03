@@ -1,0 +1,22 @@
+export default {
+  app_title: 'Annorama',
+  sidebar_title: 'Projects',
+  sidebar_bt_new_project: 'start new project',
+  sidebar_language: 'language',
+  new_project_title: 'New project',
+  new_project_inputName: 'project name',
+  new_project_selectCategory: 'Choose a category',
+  new_project_inputUrl: 'Paste here the first url for your request',
+  new_project_action: 'Create',
+  new_project_errName: 'name',
+  new_project_errCategory: 'category',
+  new_project_errUrl: 'url',
+  project_cat_job: 'Job',
+  project_cat_housing: 'Housing',
+  project_cat_shopping: 'Shopping',
+  project_bt_refresh: 'find new results',
+  project_bt_new_source: 'add new source',
+  project_bt_detail: 'customize this project',
+  project_input_add_source_placeholder: 'Paste here the url for your request',
+  offer_link: 'open external offer'
+}
