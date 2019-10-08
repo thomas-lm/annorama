@@ -23,7 +23,8 @@ const parsers = [
   { file: 'ouestfranceimmo.js', imageDirName: 'ouestfranceimmo', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}ouestfrance-immo\.com\/(louer|acheter)\/.*$/ },
   { file: 'orpi.js', imageDirName: 'orpi', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}orpi\.com\/recherche\/.*$/ },
   { file: 'iadfrance.js', imageDirName: 'iadfrance', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}iadfrance\.fr\/rechercher\/.*$/ },
-  { file: 'century21.js', imageDirName: 'century21', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}century21\.fr\/annonces\/.*$/ }
+  { file: 'century21.js', imageDirName: 'century21', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}century21\.fr\/annonces\/.*$/ },
+  { file: 'immobilier_notaires.js', imageDirName: 'immobilier_notaires', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}immobilier\.notaires\.fr\/fr\/annonces-immobilieres-liste\?.*$/ }
 ]
 
 /**

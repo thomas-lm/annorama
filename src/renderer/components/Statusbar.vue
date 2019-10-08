@@ -84,7 +84,7 @@
   right: 4.3em;
   width: 3em;
   height: 1.5em;
-  background: white;
+  background: #9ba3a7;
   border-radius: 3px;
   font-weight: 700;
 }

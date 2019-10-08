@@ -27,6 +27,7 @@ export default {
   },
   methods: {
     openLink (url) {
+      console.log('open external ', url)
       shell.openExternal(url)
     },
     getImageLink (imageName) {

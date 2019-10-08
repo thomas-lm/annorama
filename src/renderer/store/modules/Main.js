@@ -44,8 +44,9 @@ const actions = {
   ADD_PROJECT ({ commit }, project) {
     commit('ADD_PROJECT', project)
   },
-  REFRESH_OFFERS (context, uidProject) {
-    let refreshPromise = refreshProject(context.state.projects[uidProject])
+  REFRESH_PROJECT_OFFERS (context, [uidProject, uidSource]) {
+    console.log('refreshProjectOffers', uidProject, uidSource)
+    let refreshPromise = refreshProject(context.state.projects[uidProject], uidSource)
     refreshPromise.then(([newSources, newOffers]) => {
       context.commit('UPDATE_OFFERS', [uidProject, newOffers])
       context.commit('UPDATE_SOURCES', [uidProject, newSources])

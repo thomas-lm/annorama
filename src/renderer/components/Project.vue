@@ -56,7 +56,7 @@ export default {
       })
     },
     refreshProject () {
-      this.$store.dispatch('REFRESH_OFFERS', this.uid)
+      this.$store.dispatch('REFRESH_PROJECT_OFFERS', [this.uid, undefined])
       this.$store.dispatch('REFRESH_PROCESSING')
     },
     displayAddSource () {

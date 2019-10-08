@@ -13,7 +13,10 @@
       <h3>Sources (à traduire)</h3>
       <ul>
         <li v-for="source in project.sources" :key="source.uid" v-bind:source="source">
-          {{source.uid}} <input :value="source.url" /> ({{source.itemNumber}} {{$t('project_conf_offers')}} {{$d(source.lastRequest, 'dateShort')}})
+          {{source.uid}} <input :value="source.url" />
+          <img :title="$t('project_conf_bt_refresh_source')" class="source_action" :src="'static/ico_refresh.svg'" @click="refreshSource(source.uid)"/>
+          {{source.itemNumber}} {{$t('project_conf_offers')}} {{$d(source.lastRequest, 'dateShort')}}
+          <span class="source_error">{{ source.error }}</span>
         </li>
       </ul>
       <h3>Annonces masquée (à traduire)</h3>
@@ -36,6 +39,10 @@ export default {
   methods: {
     getProject (uid) {
       this.project = this.$store.state.Main.projects[uid]
+    },
+    refreshSource (uidSource) {
+      this.$store.dispatch('REFRESH_PROJECT_OFFERS', [this.uid, uidSource])
+      this.$store.dispatch('REFRESH_PROCESSING')
     }
   },
   created () {
@@ -129,4 +136,13 @@ export default {
   overflow-y: auto;
 }
 
+.source_action {
+  height: 1em;
+  vertical-align: top;
+  cursor: pointer;
+}
+
+.source_error {
+  color: red;
+}
 </style>

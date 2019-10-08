@@ -21,5 +21,6 @@ export default {
   project_input_add_source_placeholder: 'Paste here the url for your request',
   project_conf_offer: 'offer',
   project_conf_offers: 'offers',
+  project_conf_bt_refresh_source: 'update offers',
   offer_link: 'open external offer'
 }

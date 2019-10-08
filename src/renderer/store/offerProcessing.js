@@ -46,11 +46,13 @@ function refreshSource (projectUid, source) {
   })
 }
 
-function refreshProject (currentProject) {
+function refreshProject (currentProject, uidSource) {
   // Instantiate all promise
   let sourcePromises = []
   for (const source of Object.values(currentProject.sources)) {
-    sourcePromises.push(refreshSource(currentProject.uid, source))
+    if (uidSource === undefined || source.uid === uidSource) {
+      sourcePromises.push(refreshSource(currentProject.uid, source))
+    }
   }
   return new Promise((resolve) => {
     Promise.all(sourcePromises).then(function (results) {

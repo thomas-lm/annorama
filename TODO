@@ -1,18 +1,31 @@
 LOT 1
 
+liste des annonces :
+- ajouter la source
+- ajouter la ville
+- modifier le lien pour ouvrir le volet détail
+- ajouter bouton Masquer
+- filtre bouton Masquer (couleur de fond différent pour les annonces masquées)
+- tri par date asc dsc et tri par prix
+
 page de détail d'un projet
 - liste des sources avec status (date d'upatde et message d'erreur éventuel)
-- supprimer une sources
+- supprimer/modifier une sources
 - clean des offres non mise à jour
 - clean des offres sans sources
-- Masquer une offre
-- voir les offres masquées (filtre bouton)
+- mise à jour 'une source
 
-Voir le détail d'une annonce:
+Voir le détail d'une annonce
+    ouvrir un panneau a droite pour voir le détail de l'annonce 
+    au premier clic charger l'annonce et photo
 - évolution du prix
 - date de mise à jour
 - photos
 - description
+
+amélio diverse tec
+- conserver les cookies des parsers
+- bug des images qui ne se mette pas a jour au téléchargement
 
 parser :
 logic-immo.com
@@ -24,7 +37,6 @@ squarehabitat
 lacquereur.com
 laforet
 blot-immobilier
-immobilier-notaire
 thierry-immobilier
 ajp-immombilier
 immobliier figaro

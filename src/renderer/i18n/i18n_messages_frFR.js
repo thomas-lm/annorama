@@ -18,5 +18,6 @@ export default {
   project_input_add_source_placeholder: 'Coller ici l\'url de votre recherche',
   project_conf_offer: 'annonce',
   project_conf_offers: 'annonces',
+  project_conf_bt_refresh_source: 'mettre à jour les annonces',
   offer_link: 'voir l\'annonce originale'
 }
