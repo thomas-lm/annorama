@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var offers = getOffers()
         ipcRenderer.send('render-url', offers)
       } catch (error) {
-        ipcRenderer.send('render-url-error', error)
+        ipcRenderer.send('render-url-error', error.message)
       }
     })
   }

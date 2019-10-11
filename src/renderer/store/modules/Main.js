@@ -90,6 +90,11 @@ const mutations = {
           offer.price = updatedOffers[uid].price
         }
 
+        // Update image
+        if (offer.mainImageFileName !== updatedOffers[uid].mainImageFileName) {
+          offer.mainImageFileName = updatedOffers[uid].mainImageFileName
+        }
+
         // Creation date
         if (offer.creationDate === undefined) {
           offer.creationDate = offer.lastUpdate

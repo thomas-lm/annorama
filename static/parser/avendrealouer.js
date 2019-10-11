@@ -40,23 +40,22 @@ function scrollDown(y, dy, max, success) {
  * parse content to get all offer on this page
  */
 function getOffers () {
-  let items = document.querySelectorAll('li[itemtype="http://schema.org/Offer"]')
+  let items = document.querySelectorAll('li[data-adid]')
   let response = []
   items.forEach(element => {
     // Get url from source
-    let initUrlA = element.querySelector('a')
-    if (initUrlA) {
-      let initUrl = initUrlA.getAttribute('href')
+    if(element.querySelector('a')) {
+      let initUrl = element.querySelector('a').getAttribute('href')
       let itemUrl = initUrl
-
+  
       // Remove last / if exist
       if (itemUrl.lastIndexOf('/') === itemUrl.length - 1) {
         itemUrl = itemUrl.substring(0, itemUrl.lastIndexOf('/') - 1)
       }
-
-      // get ID from url
-      let itemId = itemUrl.substring(itemUrl.lastIndexOf('/') + 1, itemUrl.lastIndexOf('.'))
-
+  
+      // get ID first div
+      let itemId = element.getAttribute('data-adid')
+  
       // image
       let itemImage = element.querySelector('img')
       let imageFileName = undefined
@@ -64,12 +63,12 @@ function getOffers () {
         urlImage = itemImage.getAttribute('src')
         imageFileName = ipcRenderer.sendSync('download-required-sync', urlImage)
       }
-
+  
       response.push({
         uid: itemId,
         mainImageFileName: imageFileName,
-        title: element.querySelector('span[itemprop="name"]').textContent,
-        price: element.querySelector('span[itemprop="priceCurrency"]').textContent,
+        title: element.querySelector('a ul').textContent,
+        price: element.querySelector('.price').textContent,
         link: window.location.hostname + initUrl,
         lastUpdate: new Date(),
         creationDate: new Date()

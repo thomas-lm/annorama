@@ -1,7 +1,6 @@
 LOT 1
 
 liste des annonces :
-- ajouter la source
 - ajouter la ville
 - modifier le lien pour ouvrir le volet détail
 - ajouter bouton Masquer
@@ -28,11 +27,12 @@ amélio diverse tec
 - bug des images qui ne se mette pas a jour au téléchargement
 
 parser :
+avendrealouer.fr
+paruvendu.fr
+
 logic-immo.com
 bienici.com
 seloger.com
-paruvendu.fr
-avendrealouer.fr
 squarehabitat
 lacquereur.com
 laforet

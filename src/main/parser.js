@@ -24,7 +24,8 @@ const parsers = [
   { file: 'orpi.js', parserName: 'orpi', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}orpi\.com\/recherche\/.*$/ },
   { file: 'iadfrance.js', parserName: 'iadfrance', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}iadfrance\.fr\/rechercher\/.*$/ },
   { file: 'century21.js', parserName: 'century21', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}century21\.fr\/annonces\/.*$/ },
-  { file: 'immobilier_notaires.js', parserName: 'immobilier_notaires', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}immobilier\.notaires\.fr\/fr\/annonces-immobilieres-liste\?.*$/ }
+  { file: 'immobilier_notaires.js', parserName: 'immobilier_notaires', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}immobilier\.notaires\.fr\/fr\/annonces-immobilieres-liste\?.*$/ },
+  { file: 'avendrealouer.js', parserName: 'avendrealouer', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}avendrealouer\.fr\/recherche.html\?.*$/ }
 ]
 
 /**
@@ -164,7 +165,6 @@ ipcMain.on('user-interact-required', (e) => {
  * Download image for item sync
  */
 ipcMain.on('download-required-sync', (e, url) => {
-  console.log('download required for ', e.sender.webContents.parserType, url)
   let parser = getCurrentParserOfType(e.sender.webContents.parserType)
   if (parser && parser.currentProcessing) {
     const basePath = path.join(userImagesStoragePath, parser.parserName)
@@ -173,19 +173,27 @@ ipcMain.on('download-required-sync', (e, url) => {
       console.log('create directory ', basePath)
       fs.mkdirSync(basePath)
     }
-    const filename = url.substring(url.lastIndexOf('/') + 1)
+    let filename = url.substring(url.lastIndexOf('/') + 1).replace(/[&\\#,+()$~%'":*?<>{}=]/g, '_')
+    // move extension at the end
+    if (filename.indexOf('.png') > -1) {
+      filename = filename.replace('.', '_') + '.png'
+    } else {
+      filename = filename.replace('.', '_') + '.jpg'
+    }
     const filePath = path.join(basePath, filename)
 
-    const file = fs.createWriteStream(filePath)
+    if (!fs.existsSync(filePath)) {
+      const file = fs.createWriteStream(filePath)
 
-    if (url.startsWith('https')) {
-      https.get(url, function (response) {
-        response.pipe(file)
-      })
-    } else {
-      http.get(url, function (response) {
-        response.pipe(file)
-      })
+      if (url.startsWith('https')) {
+        https.get(url, function (response) {
+          response.pipe(file)
+        })
+      } else {
+        http.get(url, function (response) {
+          response.pipe(file)
+        })
+      }
     }
     e.returnValue = path.join(parser.parserName, filename)
   } else {
