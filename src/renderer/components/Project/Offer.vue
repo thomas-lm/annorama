@@ -3,7 +3,8 @@
     <div class="offer_image_container">
       <img class="offer_image" :src="getImageLink(offer.mainImageFileName)" />
     </div>
-    <h2 class="offer_title">{{ offer.title }} - <b>{{ offer.price }}</b></h2>
+    <h2 class="offer_title"><img :v-if="offer.parser != undefined" class="parser_icon" :title="offer.parser" :src="'static/parser/icons/' + offer.parser + '.png'"/>
+    {{ offer.title }} - <b>{{ offer.price }}</b></h2>
     <p class="offer_desc">
       <small>[{{ offer.uid }}]</small> {{ offer.summary }}<br />
       <a @click="openLink(offer.link)">{{ $t('offer_link') }}</a>
@@ -81,5 +82,11 @@ export default {
 
   .offer_last_update {
     float: right;
+  }
+
+  .parser_icon {
+    height: 16px;
+    background-color: #ffffff;
+    margin-right: .5em;
   }
 </style>

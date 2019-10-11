@@ -25,17 +25,25 @@ function refreshSource (projectUid, source) {
     url: source.url,
     lastRequest: source.lastRequest,
     itemNumber: source.itemNumber,
+    parser: undefined,
     error: source.error
   }
   return new Promise((resolve) => {
-    parseUrlPromise(projectUid, newSource).then(values => {
+    parseUrlPromise(projectUid, newSource).then(response => {
+      let values = response.source
       newSource.lastRequest = new Date()
       newSource.itemNumber = values.length
+      newSource.parser = response.parserName
       newSource.error = ''
       let newOffers = {}
       values.forEach(offer => {
+        // offer tranformation
         let nuid = source.uid + '-' + offer.uid
         offer.uid = nuid
+        // add parser
+        offer.parser = response.parserName
+        // clean title and price
+        offer.title = offer.title.replace(/\s\s+/g, '')
         newOffers[nuid] = offer
       })
       resolve({ source: newSource, offers: newOffers })

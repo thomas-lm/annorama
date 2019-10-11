@@ -19,12 +19,12 @@ if (!fs.existsSync(userImagesStoragePath)) {
 }
 
 const parsers = [
-  { file: 'leboncoin.js', imageDirName: 'leboncoin', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}leboncoin\.fr\/recherche\/.*$/ },
-  { file: 'ouestfranceimmo.js', imageDirName: 'ouestfranceimmo', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}ouestfrance-immo\.com\/(louer|acheter)\/.*$/ },
-  { file: 'orpi.js', imageDirName: 'orpi', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}orpi\.com\/recherche\/.*$/ },
-  { file: 'iadfrance.js', imageDirName: 'iadfrance', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}iadfrance\.fr\/rechercher\/.*$/ },
-  { file: 'century21.js', imageDirName: 'century21', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}century21\.fr\/annonces\/.*$/ },
-  { file: 'immobilier_notaires.js', imageDirName: 'immobilier_notaires', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}immobilier\.notaires\.fr\/fr\/annonces-immobilieres-liste\?.*$/ }
+  { file: 'leboncoin.js', parserName: 'leboncoin', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}leboncoin\.fr\/recherche\/.*$/ },
+  { file: 'ouestfranceimmo.js', parserName: 'ouestfranceimmo', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}ouestfrance-immo\.com\/(louer|acheter)\/.*$/ },
+  { file: 'orpi.js', parserName: 'orpi', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}orpi\.com\/recherche\/.*$/ },
+  { file: 'iadfrance.js', parserName: 'iadfrance', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}iadfrance\.fr\/rechercher\/.*$/ },
+  { file: 'century21.js', parserName: 'century21', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}century21\.fr\/annonces\/.*$/ },
+  { file: 'immobilier_notaires.js', parserName: 'immobilier_notaires', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}immobilier\.notaires\.fr\/fr\/annonces-immobilieres-liste\?.*$/ }
 ]
 
 /**
@@ -126,7 +126,7 @@ ipcMain.on('render-url', (e, source) => {
   let parser = getCurrentParserOfType(e.sender.webContents.parserType)
   if (parser && parser.currentProcessing) {
     e.sender.send('render-url-reply')
-    parser.currentProcessing.sender.send('parse-url-reply-' + parser.currentProcessing.suid, source)
+    parser.currentProcessing.sender.send('parse-url-reply-' + parser.currentProcessing.suid, { source: source, parserName: parser.parserName })
     parser.processingWindow.hide()
     parser.currentProcessing = undefined
   } else {
@@ -167,7 +167,7 @@ ipcMain.on('download-required-sync', (e, url) => {
   console.log('download required for ', e.sender.webContents.parserType, url)
   let parser = getCurrentParserOfType(e.sender.webContents.parserType)
   if (parser && parser.currentProcessing) {
-    const basePath = path.join(userImagesStoragePath, parser.imageDirName)
+    const basePath = path.join(userImagesStoragePath, parser.parserName)
     // Create directory
     if (!fs.existsSync(basePath)) {
       console.log('create directory ', basePath)
@@ -187,7 +187,7 @@ ipcMain.on('download-required-sync', (e, url) => {
         response.pipe(file)
       })
     }
-    e.returnValue = path.join(parser.imageDirName, filename)
+    e.returnValue = path.join(parser.parserName, filename)
   } else {
     console.log('error no parser init')
   }

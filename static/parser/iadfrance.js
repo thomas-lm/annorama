@@ -40,6 +40,11 @@ function scrollDown(y, dy, max, success) {
  * parse content to get all offer on this page
  */
 function getOffers () {
+  let btAlert = document.querySelectorAll('.button__alert')
+  if (btAlert.length > 3) {
+    // If button is > 3 then no result
+    return []
+  }
   let items = document.querySelectorAll('.wrapper .c-offer')
   let response = []
   items.forEach(element => {

@@ -14,6 +14,7 @@
       <ul>
         <li v-for="source in project.sources" :key="source.uid" v-bind:source="source">
           {{source.uid}} <input :value="source.url" />
+          <img :v-if="source.parser" :title="source.parser" class="source_icon" :src="'static/parser/icons/' + source.parser + '.png'"/>
           <img :title="$t('project_conf_bt_refresh_source')" class="source_action" :src="'static/ico_refresh.svg'" @click="refreshSource(source.uid)"/>
           {{source.itemNumber}} {{$t('project_conf_offers')}} {{$d(source.lastRequest, 'dateShort')}}
           <span class="source_error">{{ source.error }}</span>
@@ -134,6 +135,12 @@ export default {
   bottom: 0;
   overflow: hidden;
   overflow-y: auto;
+}
+
+.source_icon {
+  height: 1em;
+  vertical-align: top;
+  border: 1px solid #ddd;
 }
 
 .source_action {
