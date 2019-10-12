@@ -22,7 +22,7 @@ function createWindow () {
    */
   mainWindow = new BrowserWindow({
     width: 900,
-    height: 500,
+    height: 600,
     show: false,
     autoHideMenuBar: true,
     useContentSize: true,

@@ -17,6 +17,7 @@
 
 <script>
 
+import { mapState } from 'vuex'
 import { shell, remote } from 'electron'
 import path from 'path'
 import { APP_IMAGE_STORE_DIR } from '../../../constantes.js'
@@ -33,10 +34,19 @@ export default {
     },
     getImageLink (imageName) {
       if (imageName) {
-        return 'file://' + path.join(remote.app.getPath('userData'), APP_IMAGE_STORE_DIR, imageName)
+        let url = 'file://' + path.join(remote.app.getPath('userData'), APP_IMAGE_STORE_DIR, imageName)
+        if (this.currentProcessNumber === 0) {
+          url += '?rdm=' + Math.random(100)
+        }
+        return url
       }
       return ''
     }
+  },
+  computed: {
+    ...mapState({
+      currentProcessNumber: state => parseInt(state.Processing.currentProcessingRequest)
+    })
   }
 }
 </script>
