@@ -13,7 +13,7 @@
     </div>
     <div class="project_loader" v-bind:class="{ animate : currentProcessNumber > 0, hide : currentProcessNumber === 0 }" ></div>
     <div class="project_content">
-      <Offer v-for="offer in getSortedOffers()" :key="offer.uid" v-bind:offer="offer" />
+      <Offer v-for="offer in getSortedOffers()" :key="offer.uid" v-bind:offer="offer" v-bind:uidProject="project.uid" />
     </div>
   </div>
 </template>

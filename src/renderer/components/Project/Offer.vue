@@ -11,6 +11,19 @@
       <span class="offer_last_update" v-if="Date.parse(offer.creationDate)" :title="$d(new Date(offer.creationDate), 'timeShort')">
         {{ $d(new Date(offer.creationDate), 'dateShort') }}
       </span>
+      <ul :v-if="offer.detail">
+        <li>title : {{offer.detail.title}}</li>
+        <li>price : {{offer.detail.price}}</li>
+        <li>date : {{offer.detail.date}}</li>
+        <li>description : {{offer.detail.description}}</li>
+        <li>localisation : {{offer.detail.localisation}}</li>
+        <li>fai_included : {{offer.detail.fai_included}}</li>
+        <li>type : {{offer.detail.type}}</li>
+        <li>rooms : {{offer.detail.rooms}}</li>
+        <li>square : {{offer.detail.square}}</li>
+        <li>ges : {{offer.detail.ges}}</li>
+        <li>energy : {{offer.detail.energy}}</li>
+      </ul>
     </p>
   </article>
 </template>
@@ -18,24 +31,25 @@
 <script>
 
 import { mapState } from 'vuex'
-import { shell, remote } from 'electron'
+import { remote } from 'electron'
 import path from 'path'
 import { APP_IMAGE_STORE_DIR } from '../../../constantes.js'
 
 export default {
   name: 'Offer',
   props: {
-    offer: Object
+    offer: Object,
+    uidProject: String
   },
   methods: {
-    openLink (url) {
-      console.log('open external ', url)
-      shell.openExternal(url)
+    getOfferDetail () {
+      this.$store.dispatch('REFRESH_OFFER_DETAIL', [this.uidProject, this.offer.uid])
     },
     getImageLink (imageName) {
       if (imageName) {
         let url = 'file://' + path.join(remote.app.getPath('userData'), APP_IMAGE_STORE_DIR, imageName)
         if (this.currentProcessNumber === 0) {
+          // Need to show the new picture at update
           url += '?rdm=' + Math.random(100)
         }
         return url

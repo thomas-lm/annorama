@@ -19,13 +19,77 @@ if (!fs.existsSync(userImagesStoragePath)) {
 }
 
 const parsers = [
-  { file: 'leboncoin.js', parserName: 'leboncoin', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}leboncoin\.fr\/recherche\/.*$/ },
-  { file: 'ouestfranceimmo.js', parserName: 'ouestfranceimmo', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}ouestfrance-immo\.com\/(louer|acheter)\/.*$/ },
-  { file: 'orpi.js', parserName: 'orpi', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}orpi\.com\/recherche\/.*$/ },
-  { file: 'iadfrance.js', parserName: 'iadfrance', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}iadfrance\.fr\/rechercher\/.*$/ },
-  { file: 'century21.js', parserName: 'century21', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}century21\.fr\/annonces\/.*$/ },
-  { file: 'immobilier_notaires.js', parserName: 'immobilier_notaires', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}immobilier\.notaires\.fr\/fr\/annonces-immobilieres-liste\?.*$/ },
-  { file: 'avendrealouer.js', parserName: 'avendrealouer', urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}avendrealouer\.fr\/recherche.html\?.*$/ }
+  {
+    file: 'leboncoin.js',
+    parserName: 'leboncoin',
+    urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}leboncoin\.fr\/recherche\/.*$/
+  },
+  {
+    file: 'leboncoin_detail.js',
+    parserName: 'leboncoin_detail',
+    urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}leboncoin\.fr\/[a_z_]+\/[0-9]+\.htm$/
+  },
+  {
+    file: 'ouestfranceimmo.js',
+    parserName: 'ouestfranceimmo',
+    urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}ouestfrance-immo\.com\/(louer|acheter)\/.*$/
+  },
+  {
+    file: 'ouestfranceimmo_detail.js',
+    parserName: 'ouestfranceimmo_detail',
+    urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}ouestfrance-immo\.com\/.+\/[0-9]+\.htm$/
+  },
+  {
+    file: 'orpi.js',
+    parserName: 'orpi',
+    urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}orpi\.com\/recherche\/.*$/
+  },
+  {
+    file: 'orpi_detail.js',
+    parserName: 'orpi_detail',
+    urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}orpi\.com\/.+-[a-z0-9]+\/$/
+  },
+  {
+    file: 'iadfrance.js',
+    parserName: 'iadfrance',
+    urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}iadfrance\.fr\/rechercher\/.*$/
+  },
+  {
+    file: 'iadfrance_detail.js',
+    parserName: 'iadfrance_detail',
+    urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}iadfrance\.fr\/annonce\/.*$/
+  },
+  {
+    file: 'century21.js',
+    parserName: 'century21',
+    urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}century21\.fr\/annonces\/.*$/
+  },
+  {
+    file: 'century21_detail.js',
+    parserName: 'century21_detail',
+    urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}century21\.fr\/.+\/detail\/[0-9]+\/$/
+  },
+  {
+    file: 'immobilier_notaires.js',
+    parserName: 'immobilier_notaires',
+    urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}immobilier\.notaires\.fr\/fr\/annonces-immobilieres-liste\?.*$/
+  },
+  {
+    file: 'immobilier_notaires_detail.js',
+    parserName: 'immobilier_notaires_detail',
+    urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}immobilier\.notaires\.fr\/fr\/annonce-immo\/.*$/
+  },
+  {
+    file: 'avendrealouer.js',
+    parserName: 'avendrealouer',
+    urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}avendrealouer\.fr\/recherche\.html\?.*$/,
+    urlRegexpDetail: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}avendrealouer\.fr\/.+-[0-9]+\.html\?$/
+  },
+  {
+    file: 'avendrealouer_detail.js',
+    parserName: 'avendrealouer_detail',
+    urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}avendrealouer\.fr\/.+-[0-9]+\.html\?$/
+  }
 ]
 
 /**

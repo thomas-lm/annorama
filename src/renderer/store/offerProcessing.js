@@ -4,18 +4,17 @@
  */
 import { ipcRenderer } from 'electron'
 
-function parseUrlPromise (projectUid, source) {
-  let uniqueUid = projectUid + '-' + source.uid
+function parseUrlPromise (uniqueUid, url) {
   return new Promise(function (resolve, reject) {
     ipcRenderer.once('parse-url-reply-' + uniqueUid, (event, response) => {
       if (response.error !== undefined) {
-        console.log('parseUrlResp error', source, uniqueUid, response.error)
+        console.log('parseUrlResp error', url, uniqueUid, response.error)
         reject(new Error(response.error))
       } else {
         resolve(response)
       }
     })
-    ipcRenderer.send('parse-url', source.url, uniqueUid)
+    ipcRenderer.send('parse-url', url, uniqueUid)
   })
 }
 
@@ -29,7 +28,8 @@ function refreshSource (projectUid, source) {
     error: source.error
   }
   return new Promise((resolve) => {
-    parseUrlPromise(projectUid, newSource).then(response => {
+    let uniqueUid = projectUid + '-' + newSource.uid
+    parseUrlPromise(uniqueUid, newSource.url).then(response => {
       let values = response.source
       newSource.lastRequest = new Date()
       newSource.itemNumber = values.length
@@ -42,9 +42,6 @@ function refreshSource (projectUid, source) {
         offer.uid = nuid
         // add parser
         offer.parser = response.parserName
-        // clean title and price
-        offer.title = offer.title.replace(/\s\s+/g, '')
-        offer.price = offer.price.replace(/\s\s+/g, '')
         newOffers[nuid] = offer
       })
       resolve({ source: newSource, offers: newOffers })
@@ -83,6 +80,22 @@ function refreshProject (currentProject, uidSource) {
   })
 }
 
+function refreshOffer (currentProject, uidOffer) {
+  return new Promise(function (resolve) {
+    if (currentProject.offers && currentProject.offers[uidOffer]) {
+      let offer = currentProject.offers[uidOffer]
+      let uniqueUid = currentProject.uid + '-' + uidOffer
+      parseUrlPromise(uniqueUid, offer.url).then(response => {
+        resolve(response)
+      }).catch(function () {
+        resolve({})
+      })
+    } else {
+      resolve({})
+    }
+  })
+}
+
 function countProcessing () {
   // console.log('ask for count processing')
   return new Promise(function (resolve) {
@@ -93,4 +106,4 @@ function countProcessing () {
   })
 }
 
-export { refreshProject, countProcessing }
+export { refreshProject, refreshOffer, countProcessing }

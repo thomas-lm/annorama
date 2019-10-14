@@ -29,7 +29,7 @@
  */
 
 import { DEFAULT_LANGUAGE } from '../../../constantes.js'
-import { refreshProject } from '../offerProcessing.js'
+import { refreshProject, refreshOffer } from '../offerProcessing.js'
 import Vue from 'vue'
 
 const state = {
@@ -54,6 +54,12 @@ const actions = {
   },
   ADD_SOURCE ({ commit }, [uidProject, source]) {
     commit('ADD_SOURCE', [uidProject, source])
+  },
+  REFRESH_OFFER_DETAIL (context, [uidProject, uidOffer]) {
+    let refreshPromise = refreshOffer(context.state.projects[uidProject], uidOffer)
+    refreshPromise.then((offerDefail) => {
+      context.commit('UPDATE_OFFER_DETAIL', [uidProject, uidOffer, offerDefail])
+    })
   }
 }
 
@@ -120,6 +126,12 @@ const mutations = {
   },
   ADD_SOURCE (state, [uidProject, source]) {
     Vue.set(state.projects[uidProject].sources, source.uid, source)
+  },
+  UPDATE_OFFER_DETAIL ({ commit }, [uidProject, uidOffer, detail]) {
+    let project = state.projects[uidProject]
+    if (project.offers && project.offers[uidOffer]) {
+      Vue.set(project.offers[uidOffer], 'detail', detail)
+    }
   }
 }
 export default { state, mutations, actions }

@@ -37,8 +37,8 @@ function getOffers () {
     response.push({
       uid: itemId,
       mainImageFileName: imageFileName,
-      title: element.querySelector('a').textContent,
-      price: element.querySelector('strong').textContent,
+      title: element.querySelector('a').textContent.replace(/\s\s+/g, ''),
+      price: element.querySelector('strong').textContent.replace(/\s\s+/g, ''),
       link: window.location.hostname + initUrl,
       lastUpdate: new Date(),
       creationDate: new Date()
