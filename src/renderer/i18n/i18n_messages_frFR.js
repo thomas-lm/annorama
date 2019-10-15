@@ -19,5 +19,5 @@ export default {
   project_conf_offer: 'annonce',
   project_conf_offers: 'annonces',
   project_conf_bt_refresh_source: 'mettre à jour les annonces',
-  offer_link: 'voir l\'annonce originale'
+  offer_link: 'Charger les données supplémentaires'
 }

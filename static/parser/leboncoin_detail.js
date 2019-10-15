@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (detail) {
           detail.click()
         }
-        var offers = getOffers()
-        ipcRenderer.send('render-url', offers)
+        var offerDetail = getOfferDetail()
+        ipcRenderer.send('render-url', offerDetail)
       } catch (error) {
         ipcRenderer.send('render-url-error', error.message)
       }
@@ -45,9 +45,9 @@ function scrollDown(y, dy, max, success) {
 /**
  * parse content to get all offer on this page
  */
-function getOffers () {
+function getOfferDetail () {
   let item = {
-    images = []
+    images: []
   }
 
   let images = document.querySelectorAll('section section img[alt^=image-galerie]')
@@ -59,54 +59,54 @@ function getOffers () {
 
   let title = document.querySelector('[data-qa-id=adview_title] > h1')
   if (title) {
-    item.title = title.textContent
+    item.title = title.textContent.replace(/\s\s+/g, '')
   }
 
   let price = document.querySelector('[data-qa-id=adview_price] span')
   if (price) {
-    item.price = price.textContent
+    item.price = price.textContent.replace(/\s\s+/g, '')
   }
 
   let date = document.querySelector('[data-qa-id=adview_date]')
   if (date) {
-    item.date = date.textContent
+    item.date = date.textContent.replace(/\s\s+/g, '')
   }
 
   let description = document.querySelector('[data-qa-id=adview_description_container] span[class^=content]')
   if (description) {
-    item.description = description.textContent
+    item.description = description.textContent.replace(/\s\s+/g, '')
   }
   
   let localisation = document.querySelector('[data-qa-id=adview_location_informations] > span')
   if (localisation) {
-    item.localisation = localisation
+    item.localisation = localisation.textContent.replace(/\s\s+/g, '')
   }
 
   let fai_included = document.querySelector('[data-qa-id=criteria_item_fai_included] > div > div:nth-child(2)')
   if (fai_included) {
-    item.fai_included = fai_included.textContent
+    item.fai_included = fai_included.textContent.replace(/\s\s+/g, '')
   }
 
   let type = document.querySelector('[data-qa-id=criteria_item_real_estate_type] > div > div:nth-child(2)')
   if (type) {
-    item.type = type.textContent
+    item.type = type.textContent.replace(/\s\s+/g, '')
   }
 
   let rooms = document.querySelector('[data-qa-id=criteria_item_rooms] > div > div:nth-child(2)')
   if (rooms) {
-    item.rooms = rooms.textContent
+    item.rooms = rooms.textContent.replace(/\s\s+/g, '')
   }
 
   let square = document.querySelector('[data-qa-id=criteria_item_square] > div > div:nth-child(2)')
   if (square) {
-    item.square = square.textContent
+    item.square = square.textContent.replace(/\s\s+/g, '')
   }
 
   let gess = document.querySelectorAll('[data-qa-id=criteria_item_ges] > div > div:nth-child(2) > div div')
   if (gess) {
     gess.forEach(ges => {
       if (ges.classList.length === 3) {
-        item.ges = ges.textContent
+        item.ges = ges.textContent.replace(/\s\s+/g, '')
       }
     })
   }
@@ -115,7 +115,7 @@ function getOffers () {
   if (energys) {
     energys.forEach(energy => {
       if (energy.classList.length === 3) {
-        item.energy = energy.textContent
+        item.energy = energy.textContent.replace(/\s\s+/g, '')
       }
     })
   }

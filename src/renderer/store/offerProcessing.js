@@ -85,13 +85,13 @@ function refreshOffer (currentProject, uidOffer) {
     if (currentProject.offers && currentProject.offers[uidOffer]) {
       let offer = currentProject.offers[uidOffer]
       let uniqueUid = currentProject.uid + '-' + uidOffer
-      parseUrlPromise(uniqueUid, offer.url).then(response => {
-        resolve(response)
-      }).catch(function () {
-        resolve({})
+      parseUrlPromise(uniqueUid, offer.link).then(response => {
+        resolve(response.source)
+      }).catch(function (e) {
+        resolve({error: e.message})
       })
     } else {
-      resolve({})
+      resolve({error: 'no offer found'})
     }
   })
 }

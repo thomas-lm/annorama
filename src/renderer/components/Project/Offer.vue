@@ -1,30 +1,36 @@
 <template>
   <article class="offer">
     <div class="offer_image_container">
-      <img class="offer_image" :src="getImageLink(offer.mainImageFileName)" />
+      <img class="offer_image" :src="getImageLink()" />
     </div>
     <h2 class="offer_title"><img :v-if="offer.parser != undefined" class="parser_icon" :title="offer.parser" :src="'static/parser/icons/' + offer.parser + '.png'"/>
     {{ offer.title }} - <b>{{ offer.price }}</b></h2>
     <p class="offer_desc">
       <small>[{{ offer.uid }}]</small> {{ offer.summary }}<br />
-      <a @click="openLink(offer.link)">{{ $t('offer_link') }}</a>
+      <ul v-if="offer.detail">
+        <li v-if="offer.detail.error">error : {{offer.detail.error}}</li>
+        <li v-if="offer.detail.title">title : {{offer.detail.title}}</li>
+        <li v-if="offer.detail.price">price : {{offer.detail.price}}</li>
+        <li v-if="offer.detail.date">date : {{offer.detail.date}}</li>
+        <li v-if="offer.detail.description">description : {{offer.detail.description}}</li>
+        <li v-if="offer.detail.localisation">localisation : {{offer.detail.localisation}}</li>
+        <li v-if="offer.detail.fai_included">fai_included : {{offer.detail.fai_included}}</li>
+        <li v-if="offer.detail.type">type : {{offer.detail.type}}</li>
+        <li v-if="offer.detail.detroomsail">rooms : {{offer.detail.rooms}}</li>
+        <li v-if="offer.detail.square">square : {{offer.detail.square}}</li>
+        <li v-if="offer.detail.ges">ges : {{offer.detail.ges}}</li>
+        <li v-if="offer.detail.energy">energy : {{offer.detail.energy}}</li>
+      </ul>
+      <div v-if="offer.detail && offer.detail.images">
+        <img v-for="image in offer.detail.images" :key="image" v-bind:image="image" :src="getImageLink(image)" />
+      </div>
+      <a v-if="!offer.pending" @click="getOfferDetail()">{{ $t('offer_link') }}</a>
+      <span v-if="offer.pending" >{{ $t('offer_link') }}</span>
       <span class="offer_last_update" v-if="Date.parse(offer.creationDate)" :title="$d(new Date(offer.creationDate), 'timeShort')">
         {{ $d(new Date(offer.creationDate), 'dateShort') }}
       </span>
-      <ul :v-if="offer.detail">
-        <li>title : {{offer.detail.title}}</li>
-        <li>price : {{offer.detail.price}}</li>
-        <li>date : {{offer.detail.date}}</li>
-        <li>description : {{offer.detail.description}}</li>
-        <li>localisation : {{offer.detail.localisation}}</li>
-        <li>fai_included : {{offer.detail.fai_included}}</li>
-        <li>type : {{offer.detail.type}}</li>
-        <li>rooms : {{offer.detail.rooms}}</li>
-        <li>square : {{offer.detail.square}}</li>
-        <li>ges : {{offer.detail.ges}}</li>
-        <li>energy : {{offer.detail.energy}}</li>
-      </ul>
     </p>
+    <div class="offer_loader" v-bind:class="{ animate : offer.pending, hide : !offer.pending }" ></div>
   </article>
 </template>
 
@@ -39,15 +45,15 @@ export default {
   name: 'Offer',
   props: {
     offer: Object,
-    uidProject: String
+    uidProject: Number
   },
   methods: {
     getOfferDetail () {
       this.$store.dispatch('REFRESH_OFFER_DETAIL', [this.uidProject, this.offer.uid])
     },
-    getImageLink (imageName) {
-      if (imageName) {
-        let url = 'file://' + path.join(remote.app.getPath('userData'), APP_IMAGE_STORE_DIR, imageName)
+    getImageLink () {
+      if (this.offer.mainImageFileName) {
+        let url = 'file://' + path.join(remote.app.getPath('userData'), APP_IMAGE_STORE_DIR, this.offer.mainImageFileName)
         if (this.currentProcessNumber === 0) {
           // Need to show the new picture at update
           url += '?rdm=' + Math.random(100)
@@ -78,7 +84,6 @@ export default {
   .offer_image_container {
     height: 4em;
     width: 7em;
-    background-color: #FFFAF6;
     text-align: center;
     float: left;
   }
@@ -112,5 +117,25 @@ export default {
     height: 16px;
     background-color: #ffffff;
     margin-right: .5em;
+  }
+
+
+  .offer_loader {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: .5em;
+    background: linear-gradient(90deg, #818f8e, #d7dfdb, #818f8e);
+    background-size: 200%;
+    z-index: 2;
+  }
+
+  .offer_loader.hide {
+    background:none;
+  }
+
+  .offer_loader.animate {
+    animation: Loading 2s infinite;
   }
 </style>

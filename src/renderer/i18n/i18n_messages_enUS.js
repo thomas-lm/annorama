@@ -22,5 +22,5 @@ export default {
   project_conf_offer: 'offer',
   project_conf_offers: 'offers',
   project_conf_bt_refresh_source: 'update offers',
-  offer_link: 'open external offer'
+  offer_link: 'Load extra data'
 }

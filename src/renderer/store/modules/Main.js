@@ -56,6 +56,7 @@ const actions = {
     commit('ADD_SOURCE', [uidProject, source])
   },
   REFRESH_OFFER_DETAIL (context, [uidProject, uidOffer]) {
+    context.commit('UPDATE_OFFER_PENDING', [uidProject, uidOffer])
     let refreshPromise = refreshOffer(context.state.projects[uidProject], uidOffer)
     refreshPromise.then((offerDefail) => {
       context.commit('UPDATE_OFFER_DETAIL', [uidProject, uidOffer, offerDefail])
@@ -127,10 +128,17 @@ const mutations = {
   ADD_SOURCE (state, [uidProject, source]) {
     Vue.set(state.projects[uidProject].sources, source.uid, source)
   },
-  UPDATE_OFFER_DETAIL ({ commit }, [uidProject, uidOffer, detail]) {
+  UPDATE_OFFER_DETAIL (state, [uidProject, uidOffer, detail]) {
     let project = state.projects[uidProject]
     if (project.offers && project.offers[uidOffer]) {
       Vue.set(project.offers[uidOffer], 'detail', detail)
+      Vue.set(project.offers[uidOffer], 'pending', false)
+    }
+  },
+  UPDATE_OFFER_PENDING (state, [uidProject, uidOffer]) {
+    let project = state.projects[uidProject]
+    if (project.offers && project.offers[uidOffer]) {
+      Vue.set(project.offers[uidOffer], 'pending', true)
     }
   }
 }

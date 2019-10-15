@@ -27,7 +27,7 @@ const parsers = [
   {
     file: 'leboncoin_detail.js',
     parserName: 'leboncoin_detail',
-    urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}leboncoin\.fr\/[a_z_]+\/[0-9]+\.htm$/
+    urlRegexp: /^(https:\/\/|http:\/\/){0,1}(www\.){0,1}leboncoin\.fr\/[a-z_]+\/[0-9]+\.htm\/$/
   },
   {
     file: 'ouestfranceimmo.js',
@@ -106,7 +106,7 @@ ipcMain.on('parse-url', (e, url, suid) => {
     }
   })
   if (found === false) {
-    console.log('no parser found')
+    console.log('no parser found for', url)
     e.sender.send('parse-url-reply-' + suid, {
       error: 'no parser found'
     })
@@ -118,6 +118,7 @@ ipcMain.on('parse-url', (e, url, suid) => {
  */
 function parseUrl (parser, url, suid, sender) {
   if (parser.processingWindow === undefined) {
+    console.log('init parsing window for', parser.parserName)
     // Init processing window
     parser.processingWindow = new BrowserWindow({
       width: 400,
@@ -158,9 +159,13 @@ function parserProcessing (parser) {
   if (parser.currentProcessing === undefined && parser.processingQueue.length > 0) {
     parser.currentProcessing = parser.processingQueue.shift()
     parser.currentProcessing.startDate = new Date()
-    console.log('processing ', parser.file, parser.currentProcessing.url, parser.currentProcessing.suid)
+    let url = parser.currentProcessing.url
+    if (url.indexOf('http') !== 0) {
+      url = 'http://' + url
+    }
+    console.log('processing ', parser.file, url, parser.currentProcessing.suid)
     // parser.processingWindow.show()
-    parser.processingWindow.loadURL(parser.currentProcessing.url)
+    parser.processingWindow.loadURL(url)
   } else if (parser.currentProcessing !== undefined) {
     // Timeout if > 30s
     if (new Date().getTime() - parser.currentProcessing.startDate.getTime() > 30000) {
