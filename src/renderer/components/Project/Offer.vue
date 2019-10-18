@@ -21,9 +21,11 @@
         <li v-if="offer.detail.ges">ges : {{offer.detail.ges}}</li>
         <li v-if="offer.detail.energy">energy : {{offer.detail.energy}}</li>
       </ul>
-      <div v-if="offer.detail && offer.detail.images">
-        <img v-for="image in offer.detail.images" :key="image" v-bind:image="image" :src="getImageLink(image)" />
-      </div>
+    </p>
+    <div v-if="offer.detail && offer.detail.images" class="offer_images_preview">
+      <img v-for="image in offer.detail.images" :key="image" v-bind:image="image" :src="getImageLink(image)" />
+    </div>
+    <p>
       <a v-if="!offer.pending" @click="getOfferDetail()">{{ $t('offer_link') }}</a>
       <span v-if="offer.pending" >{{ $t('offer_link') }}</span>
       <span class="offer_last_update" v-if="Date.parse(offer.creationDate)" :title="$d(new Date(offer.creationDate), 'timeShort')">
