@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log('reply to renderer-error')
     })
     //Load all image with scroll
-    scrollDown(30, 30, document.body.scrollHeight, function() {
+    scrollDown(30, 100, document.body.scrollHeight, function() {
       try {
         let detail = document.querySelector('[data-qa-id=adview_description_container] span[class^=TextLink]')
         if (detail) {
@@ -50,10 +50,15 @@ function getOfferDetail () {
     images: []
   }
 
-  let images = document.querySelectorAll('section section img[alt^=image-galerie]')
+  let controlNext = document.querySelector('[data-qa-id=slideshow_control_next]')
+  if(controlNext) {
+    controlNext.click();
+  }
+  let images = document.querySelectorAll('[data-qa-id=slideshow_container] img')
   if (images) {
     images.forEach(img => {
-      item.images.push(ipcRenderer.sendSync('download-required-sync', img.getAttribute('src')))
+      let url = img.getAttribute('src')
+      item.images.push(ipcRenderer.sendSync('download-required-sync', url))
     })
   }
 
@@ -74,7 +79,7 @@ function getOfferDetail () {
 
   let description = document.querySelector('[data-qa-id=adview_description_container] span[class^=content]')
   if (description) {
-    item.description = description.textContent.replace(/\s\s+/g, '')
+    item.description = description.innerHTML.replace(/\s\s+/g, '')
   }
   
   let localisation = document.querySelector('[data-qa-id=adview_location_informations] > span')
@@ -111,6 +116,17 @@ function getOfferDetail () {
     })
   }
 
+  if (!item.ges && item.description) {
+    // no ges found, try to get from description
+    if (item.description.indexOf('GES : ') > -1 ) {
+      item.ges = item.description.substring(item.description.indexOf('GES : ') + 6, item.description.indexOf('GES : ') + 7)
+    } else {
+      if (item.description.indexOf('GSE : ') > -1 ) {
+        item.ges = item.description.substring(item.description.indexOf('GSE : ') + 6, item.description.indexOf('GSE : ') + 7)
+      }
+    }
+  }
+
   let energys = document.querySelectorAll('[data-qa-id=criteria_item_energy_rate] > div > div:nth-child(2) > div div')
   if (energys) {
     energys.forEach(energy => {
@@ -120,5 +136,12 @@ function getOfferDetail () {
     })
   }
   
+  if (!item.energy && item.description) {
+    // no ges found, try to get from description
+    if (item.description.indexOf('DPE : ') > -1 ) {
+      item.energy = item.description.substring(item.description.indexOf('DPE : ') + 6, item.description.indexOf('DPE : ') + 7)
+    }
+  }
+
   return item
 }

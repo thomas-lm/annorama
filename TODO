@@ -1,8 +1,4 @@
 LOT 1
-détail d'une annonce
-- adapter le parser pour gérer à la fois la liste des annonces et le détail
-- ajout d'une regexp de détail pour l'url
-- dans le parser identifier cette regexp et lancer un autre event pour le détail (les fichiers js des parser doivent le gérer)
 
 liste des annonces :
 - ajouter la ville
@@ -30,8 +26,13 @@ amélio diverse tec
 - conserver les cookies des parsers
 
 parser :
-paruvendu.fr
+orpi detail
+avendrealouer detail
+iadfrance detail
+immobilier_notaires detail
+ouestfranceimmo detail
 
+paruvendu.fr
 logic-immo.com
 bienici.com
 seloger.com

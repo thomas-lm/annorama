@@ -48,18 +48,23 @@ const actions = {
     console.log('refreshProjectOffers', uidProject, uidSource)
     let refreshPromise = refreshProject(context.state.projects[uidProject], uidSource)
     refreshPromise.then(([newSources, newOffers]) => {
-      context.commit('UPDATE_OFFERS', [uidProject, newOffers])
       context.commit('UPDATE_SOURCES', [uidProject, newSources])
+      Vue.nextTick(function() {
+        context.commit('UPDATE_OFFERS', [uidProject, newOffers])
+      });
     })
   },
   ADD_SOURCE ({ commit }, [uidProject, source]) {
     commit('ADD_SOURCE', [uidProject, source])
   },
   REFRESH_OFFER_DETAIL (context, [uidProject, uidOffer]) {
-    context.commit('UPDATE_OFFER_PENDING', [uidProject, uidOffer])
+    context.commit('UPDATE_OFFER_PENDING', [uidProject, uidOffer, true])
     let refreshPromise = refreshOffer(context.state.projects[uidProject], uidOffer)
     refreshPromise.then((offerDefail) => {
       context.commit('UPDATE_OFFER_DETAIL', [uidProject, uidOffer, offerDefail])
+      Vue.nextTick(function() {
+        context.commit('UPDATE_OFFER_PENDING', [uidProject, uidOffer, false])
+      });
     })
   }
 }
@@ -115,7 +120,6 @@ const mutations = {
     // Create new offer
     for (const [uid, offer] of Object.entries(updatedOffers)) {
       if (!existingKeys.includes(uid)) {
-        // console.log('create ', uid)
         Vue.set(state.projects[uidProject].offers, uid, offer)
       }
     }
@@ -132,13 +136,12 @@ const mutations = {
     let project = state.projects[uidProject]
     if (project.offers && project.offers[uidOffer]) {
       Vue.set(project.offers[uidOffer], 'detail', detail)
-      Vue.set(project.offers[uidOffer], 'pending', false)
     }
   },
-  UPDATE_OFFER_PENDING (state, [uidProject, uidOffer]) {
+  UPDATE_OFFER_PENDING (state, [uidProject, uidOffer, active]) {
     let project = state.projects[uidProject]
     if (project.offers && project.offers[uidOffer]) {
-      Vue.set(project.offers[uidOffer], 'pending', true)
+      Vue.set(project.offers[uidOffer], 'pending', active)
     }
   }
 }

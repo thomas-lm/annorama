@@ -1,18 +1,18 @@
 <template>
   <article class="offer">
     <div class="offer_image_container">
-      <img class="offer_image" :src="getImageLink()" />
+      <img class="offer_image" :src="getMainImageLink()" />
     </div>
     <h2 class="offer_title"><img :v-if="offer.parser != undefined" class="parser_icon" :title="offer.parser" :src="'static/parser/icons/' + offer.parser + '.png'"/>
     {{ offer.title }} - <b>{{ offer.price }}</b></h2>
     <p class="offer_desc">
-      <small>[{{ offer.uid }}]</small> {{ offer.summary }}<br />
+      <small>[{{ offer.uid }}]</small> {{ offer.summary }}<input type="text" :value="offer.link" /><br />
       <ul v-if="offer.detail">
         <li v-if="offer.detail.error">error : {{offer.detail.error}}</li>
         <li v-if="offer.detail.title">title : {{offer.detail.title}}</li>
         <li v-if="offer.detail.price">price : {{offer.detail.price}}</li>
         <li v-if="offer.detail.date">date : {{offer.detail.date}}</li>
-        <li v-if="offer.detail.description">description : {{offer.detail.description}}</li>
+        <li v-if="offer.detail.description">description : <span v-html="offer.detail.description"></span></li>
         <li v-if="offer.detail.localisation">localisation : {{offer.detail.localisation}}</li>
         <li v-if="offer.detail.fai_included">fai_included : {{offer.detail.fai_included}}</li>
         <li v-if="offer.detail.type">type : {{offer.detail.type}}</li>
@@ -26,7 +26,7 @@
       <img v-for="image in offer.detail.images" :key="image" v-bind:image="image" :src="getImageLink(image)" />
     </div>
     <p>
-      <a v-if="!offer.pending" @click="getOfferDetail()">{{ $t('offer_link') }}</a>
+      <a v-if="!offer.pending" @click="getOfferDetail()" class="offer_link">{{ $t('offer_link') }}</a>
       <span v-if="offer.pending" >{{ $t('offer_link') }}</span>
       <span class="offer_last_update" v-if="Date.parse(offer.creationDate)" :title="$d(new Date(offer.creationDate), 'timeShort')">
         {{ $d(new Date(offer.creationDate), 'dateShort') }}
@@ -53,9 +53,12 @@ export default {
     getOfferDetail () {
       this.$store.dispatch('REFRESH_OFFER_DETAIL', [this.uidProject, this.offer.uid])
     },
-    getImageLink () {
-      if (this.offer.mainImageFileName) {
-        let url = 'file://' + path.join(remote.app.getPath('userData'), APP_IMAGE_STORE_DIR, this.offer.mainImageFileName)
+    getMainImageLink () {
+      return this.getImageLink(this.offer.mainImageFileName)
+    },
+    getImageLink (urlImage) {
+      if (urlImage) {
+        let url = 'file://' + path.join(remote.app.getPath('userData'), APP_IMAGE_STORE_DIR, urlImage)
         if (this.currentProcessNumber === 0) {
           // Need to show the new picture at update
           url += '?rdm=' + Math.random(100)
@@ -106,7 +109,7 @@ export default {
     margin: .5em .5em 0 8em;
   }
 
-  .offer_desc a {
+  .offer_link {
     text-decoration: underline;
     cursor: pointer;
   }
@@ -140,4 +143,15 @@ export default {
   .offer_loader.animate {
     animation: Loading 2s infinite;
   }
+
+  .offer_images_preview {
+    text-align: center;
+  }
+
+  .offer_images_preview img{
+    margin-left: .5em;
+    height: 10em;
+    display: inline-block;
+  }
+
 </style>
