@@ -26,12 +26,13 @@ amélio diverse tec
 - conserver les cookies des parsers
 
 parser :
-orpi detail
+orpi detail (manque orpi-bien-exception)
 avendrealouer detail
 iadfrance detail
 immobilier_notaires detail
 ouestfranceimmo detail
 
+https://www.thierry-immobilier.fr/
 paruvendu.fr
 logic-immo.com
 bienici.com

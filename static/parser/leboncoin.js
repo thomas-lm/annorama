@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log('reply to renderer-error')
     })
     //Load all image with scroll
-    scrollDown(30, 100, document.body.scrollHeight, function() {
+    scrollDown(30, 50, document.body.scrollHeight, function() {
       try {
         var offers = getOffers()
         ipcRenderer.send('render-url', offers)
@@ -59,7 +59,7 @@ function getOffers () {
 
       // image
       let itemImage = element.querySelector('img')
-      let imageFileName = undefined
+      let imageFileName = ''
       if (itemImage) {
         urlImage = itemImage.getAttribute('src')
         imageFileName = ipcRenderer.sendSync('download-required-sync', urlImage)
@@ -68,8 +68,8 @@ function getOffers () {
       response.push({
         uid: itemId,
         mainImageFileName: imageFileName,
-        title: element.querySelector('span[itemprop="name"]').textContent.replace(/\s\s+/g, ''),
-        price: element.querySelector('span[itemprop="priceCurrency"]')?element.querySelector('span[itemprop="priceCurrency"]').textContent.replace(/\s\s+/g, ''):'',
+        title: element.querySelector('span[itemprop="name"]').textContent.replace(/\s\s+/g, ' '),
+        price: element.querySelector('span[itemprop="priceCurrency"]')?element.querySelector('span[itemprop="priceCurrency"]').textContent.replace(/\s\s+/g, ' '):'',
         link: window.location.hostname + initUrl,
         lastUpdate: new Date(),
         creationDate: new Date()
