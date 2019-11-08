@@ -52,7 +52,10 @@ function getOfferDetail () {
   if (images) {
     images.forEach(img => {
       let url = img.getAttribute('src')
-      item.images.push(ipcRenderer.sendSync('download-required-sync', url))
+      let file = ipcRenderer.sendSync('download-required-sync', url)
+      if(item.images.indexOf(file) === -1) {
+        item.images.push(file)
+      }
     })
   }
 

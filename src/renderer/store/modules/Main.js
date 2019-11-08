@@ -49,9 +49,9 @@ const actions = {
     let refreshPromise = refreshProject(context.state.projects[uidProject], uidSource)
     refreshPromise.then(([newSources, newOffers]) => {
       context.commit('UPDATE_SOURCES', [uidProject, newSources])
-      Vue.nextTick(function() {
+      Vue.nextTick(function () {
         context.commit('UPDATE_OFFERS', [uidProject, newOffers])
-      });
+      })
     })
   },
   ADD_SOURCE ({ commit }, [uidProject, source]) {
@@ -62,9 +62,9 @@ const actions = {
     let refreshPromise = refreshOffer(context.state.projects[uidProject], uidOffer)
     refreshPromise.then((offerDefail) => {
       context.commit('UPDATE_OFFER_DETAIL', [uidProject, uidOffer, offerDefail])
-      Vue.nextTick(function() {
+      Vue.nextTick(function () {
         context.commit('UPDATE_OFFER_PENDING', [uidProject, uidOffer, false])
-      });
+      })
     })
   }
 }

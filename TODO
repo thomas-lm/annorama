@@ -26,13 +26,15 @@ amélio diverse tec
 - conserver les cookies des parsers
 
 parser :
-orpi detail (manque orpi-bien-exception)
 avendrealouer detail
 iadfrance detail
 immobilier_notaires detail
 ouestfranceimmo detail
+orpi detail (manque orpi-bien-exception)
 
 https://www.thierry-immobilier.fr/
+http://www.agence-blandineau.com
+cotevillas.fr
 paruvendu.fr
 logic-immo.com
 bienici.com
@@ -41,7 +43,6 @@ squarehabitat
 lacquereur.com
 laforet
 blot-immobilier
-thierry-immobilier
 ajp-immombilier
 immobliier figaro
 nexity

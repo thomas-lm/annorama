@@ -127,10 +127,10 @@ function parseUrl (parser, url, suid, sender) {
       autoHideMenuBar: true,
       webPreferences: {
         preload: path.resolve(__static, 'parser', parser.file),
-        devTools: false
+        devTools: false,
+        partition: 'persist:' + parser.parserName
       }
     })
-
     parser.processingWindow.webContents.parserType = parser.file
 
     parser.processingWindow.on('close', function (e) {
