@@ -13,6 +13,7 @@ export default {
   new_project_errUrl: 'url',
   project_cat_job: 'Job',
   project_cat_housing: 'Housing',
+  project_cat_car: 'Car',
   project_cat_shopping: 'Shopping',
   project_bt_refresh: 'find new results',
   project_bt_new_source: 'add new source',

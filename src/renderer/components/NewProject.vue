@@ -14,6 +14,7 @@
       <option value="">{{$t('new_project_selectCategory')}}</option>
       <option value="job">{{$t('project_cat_job')}}</option>
       <option value="housing">{{$t('project_cat_housing')}}</option>
+      <option value="car">{{$t('project_cat_car')}}</option>
       <option value="shopping">{{$t('project_cat_shopping')}}</option>
     </select></p>
 

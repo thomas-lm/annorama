@@ -10,6 +10,7 @@ export default {
   new_project_action: 'Créer',
   project_cat_job: 'Job',
   project_cat_housing: 'Immobilier',
+  project_cat_car: 'Voiture',
   project_cat_shopping: 'Shopping',
   project_bt_refresh: 'chercher les nouvelles annonces',
   project_bt_new_source: 'ajouter une source',

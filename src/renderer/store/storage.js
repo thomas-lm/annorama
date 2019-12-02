@@ -28,7 +28,6 @@ export default class Storage {
   }
 
   saveData () {
-    console.log(this.currentData)
     let yamlData = yaml.safeDump(this.currentData)
 
     // save file
