@@ -164,7 +164,7 @@ function parserProcessing (parser) {
       url = 'http://' + url
     }
     console.log('processing ', parser.file, url, parser.currentProcessing.suid)
-    // parser.processingWindow.show()
+    parser.processingWindow.show()
     parser.processingWindow.loadURL(url)
   } else if (parser.currentProcessing !== undefined) {
     // Timeout if > 30s

@@ -19,6 +19,7 @@ export default {
   project_bt_new_source: 'add new source',
   project_bt_detail: 'customize this project',
   project_bt_main: 'back to offers',
+  project_bt_remove_offer: 'Remove from this list',
   project_input_add_source_placeholder: 'Paste here the url for your request',
   project_conf_offer: 'offer',
   project_conf_offers: 'offers',

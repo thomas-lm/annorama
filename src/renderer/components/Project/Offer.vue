@@ -5,6 +5,9 @@
     </div>
     <h2 class="offer_title"><img :v-if="offer.parser != undefined" class="parser_icon" :title="offer.parser" :src="'static/parser/icons/' + offer.parser + '.png'"/>
     {{ offer.title }} - <b>{{ offer.price }}</b></h2>
+    <div class="offer_actions">
+      <img :title="$t('project_bt_remove_offer')" class="offer_action_trash" :src="'static/ico_trash.svg'" />
+    </div>
     <p class="offer_desc">
       <small>[{{ offer.uid }}]</small> {{ offer.summary }}<input type="text" :value="offer.link" /><br />
       <ul v-if="offer.detail">
@@ -154,4 +157,13 @@ export default {
     display: inline-block;
   }
 
+  .offer_actions {
+    position: absolute;
+    right: 1em;
+    top: .5em;
+  }
+
+  .offer_actions img {
+    height : 1em;
+  }
 </style>

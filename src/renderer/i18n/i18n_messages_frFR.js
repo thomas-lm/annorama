@@ -16,6 +16,7 @@ export default {
   project_bt_new_source: 'ajouter une source',
   project_bt_detail: 'paramètres du projet',
   project_bt_main: 'revenir aux annonces',
+  project_bt_remove_offer: 'Supprimer de la liste',
   project_input_add_source_placeholder: 'Coller ici l\'url de votre recherche',
   project_conf_offer: 'annonce',
   project_conf_offers: 'annonces',
