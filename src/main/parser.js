@@ -165,7 +165,10 @@ function parserProcessing (parser) {
     }
     console.log('processing ', parser.file, url, parser.currentProcessing.suid)
     parser.processingWindow.show()
-    parser.processingWindow.loadURL(url)
+    parser.processingWindow.loadURL(url, {
+      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0',
+      extraHeaders: 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\nAccept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3\nAccept-Encoding: gzip, deflate, br\nDNT: 1\nConnection: keep-alive\nUpgrade-Insecure-Requests: 1\n'
+    })
   } else if (parser.currentProcessing !== undefined) {
     // Timeout if > 30s
     if (new Date().getTime() - parser.currentProcessing.startDate.getTime() > 30000) {

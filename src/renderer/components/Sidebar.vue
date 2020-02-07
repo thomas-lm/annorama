@@ -1,5 +1,5 @@
 <template>
-  <aside class="sidebar">
+  <div class="sidebar">
     <h2 class="sidebar_title">{{$t('sidebar_title')}}</h2>
     <router-link class="sidebar_link" :to="{ name: 'newProject' }">
         <img src="static/ico_new.svg" class="sidebar_icon" />
@@ -16,7 +16,7 @@
         <img :src="'static/ico_cat_' + project.category + '.svg'" class="sidebar_icon" /> {{project.name}} ({{project.nbItems}})
         </router-link>
     </div>
-  </aside>
+  </div>
 </template>
 
 <script>
@@ -37,7 +37,7 @@
 .sidebar {
   position: absolute;
   left: 0;
-  top: 0;
+  top: 70px;
   bottom: 1.5em;
   width: 170px;
   background-color: #d2d7d9;

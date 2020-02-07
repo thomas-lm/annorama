@@ -1,26 +1,26 @@
 <template>
   <div id="app">
-    <header>
-      <h1>{{$t('app_title')}}</h1>
-    </header>
+    <Header />
     <main>
       <Sidebar />
       <div class="content">
         <router-view></router-view>
       </div>
-      <Statusbar />
     </main>
+    <Statusbar />
   </div>
 </template>
 
 <script>
   import { mapState } from 'vuex'
   import Sidebar from '@/components/Sidebar.vue'
+  import Header from '@/components/Header.vue'
   import Statusbar from '@/components/Statusbar.vue'
 
   export default {
     name: 'annorama',
     components: {
+      Header,
       Sidebar,
       Statusbar
     },
@@ -55,7 +55,7 @@ body {
 .content {
   position: absolute;
   left: 170px;
-  top: 0;
+  top: 60px;
   bottom: 1.5em;
   right: 0;
   min-width: 530px;
