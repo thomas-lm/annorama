@@ -26,6 +26,7 @@ amélio diverse tec
 - conserver les cookies des parsers
 
 parser :
+orpi detail (manque orpi-bien-exception)
 avendrealouer detail
 iadfrance detail
 immobilier_notaires detail
@@ -44,6 +45,7 @@ squarehabitat
 lacquereur.com
 laforet
 blot-immobilier
+thierry-immobilier
 ajp-immombilier
 immobliier figaro
 nexity
